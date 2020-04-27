@@ -56,7 +56,14 @@ const SleepLogForm = () => {
         min={moment(Date.now()).format("mm/dd/yyy")}
       />
       <input name="endTime" type="time" onChange={handleChange} />
-      <input name="rating" value={formInputs.rating} onChange={handleChange} type="number" min="0" max="4" />
+      <input
+        name="rating"
+        value={formInputs.rating}
+        onChange={handleChange}
+        type="number"
+        min="0"
+        max="4"
+      />
       <button onClick={convertDate}>convert time</button>
       <p>time difference {fullDate.diff} hours</p>
       {console.log(fullDate)}
