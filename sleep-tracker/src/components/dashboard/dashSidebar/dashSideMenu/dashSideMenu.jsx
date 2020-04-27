@@ -1,10 +1,15 @@
 import React from "react";
+import MenuItem from "./menuItem";
+import { Container } from "./dashSideMenu.styled";
 
 const SideMenu = () => {
   return (
-    <div>
-      menu
-    </div>
-  )
-}
+    <Container>
+      <MenuItem />
+      <MenuItem />
+      <MenuItem />
+      <MenuItem />
+    </Container>
+  );
+};
 export default SideMenu;
