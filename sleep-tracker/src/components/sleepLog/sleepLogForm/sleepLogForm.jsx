@@ -9,10 +9,9 @@ const SleepLogForm = () => {
     endDate: "",
     rating: 0,
   });
-  const [fullDate, setFullDate] = useState({
+  const [logValues, setLogValues] = useState({
     startTime: "",
     endTime: "",
-    // diff: "",
     rating: 0,
   });
   const handleChange = (event) => {
@@ -28,12 +27,12 @@ const SleepLogForm = () => {
     let diff = endTime.diff(startTime);
     let diffDuration = moment.duration(diff);
 
-    setFullDate({
-      ...fullDate,
+    setLogValues({
+      ...logValues,
       startTime: startTime._i,
       endTime: endTime._i,
-      // diff: diffDuration.hours(),
-      rating: formInputs.rating,
+  
+      rating: Number(formInputs.rating),
     });
   };
 
@@ -65,8 +64,8 @@ const SleepLogForm = () => {
         max="4"
       />
       <button onClick={convertDate}>convert time</button>
-      <p>time difference {fullDate.diff} hours</p>
-      {console.log(fullDate)}
+      <p>time difference {logValues.diff} hours</p>
+      {console.log(logValues)}
     </div>
   );
 };
