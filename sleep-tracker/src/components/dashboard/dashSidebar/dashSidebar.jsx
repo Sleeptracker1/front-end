@@ -1,10 +1,12 @@
 import React from "react";
+import { Container } from "./dashSidebar.styled";
+import SideProfile from "./dashSideProfile";
 
 const DashSidebar = () => {
   return (
-    <div>
-      dashSidebar
-    </div>
-  )
-}
+    <Container>
+      <SideProfile />
+    </Container>
+  );
+};
 export default DashSidebar;
