@@ -31,7 +31,7 @@ const loginUser = (state = initialState, payload) => {
   };
 };
 
-const registerUser = (state = initialState, paylaod) => {
+const registerUser = (state = initialState, payload) => {
   if (payload) {
     return {
       ...state,
@@ -45,7 +45,7 @@ const loadingUser = (state = initialState, payload) => {
     loadingUser: true,
   };
 };
-const authError = (state, payload) => {
+const authError = (state = initialState, payload) => {
   localStorage.removeItem("token");
   return {
     ...state,
