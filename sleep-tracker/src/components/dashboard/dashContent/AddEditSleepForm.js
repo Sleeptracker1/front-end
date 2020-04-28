@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { Box, FormField, Form, Grommet } from "grommet";
+import { connect } from "react-redux";
+import { Box, Form, Grommet } from "grommet";
 import moment from "moment";
 
-//import axiosWithAuth
-
-export default function SleepList(props) {
-  const [dateTime, setDateTime] = useState({
-    Date: "",
-    StartTime: "",
-    EndTime: "",
-    Score: [],
+const AddEditSleepForm = () => {
+  const [formInputs, setFormInputs] = useState({
+    startDate: "",
+    startTime: "",
+    endDate: "",
+    endTime: "",
+    score: 0,
   });
+  const [logValues, setLogValues] = useState({
+    startTime: "",
+    endTime: "",
+    rating: 0,
+  });
+  const [loading, setLoading] = useState(false);
+
   function difference(StartTime, EndTime) {
     var start = moment(StartTime, "HH:mm");
     console.log("difference", StartTime, EndTime);
@@ -25,29 +32,26 @@ export default function SleepList(props) {
 
     return diff(start, end);
   }
-  const [loading, setLoading] = useState(false);
-  // const apiURL = ""
   const AddDateTime = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     const data = () => {
-      setDateTime({
-        Date: dateTime.Date,
-        StartTime: dateTime.StartTime,
-        EndTime: dateTime.EndTime,
-        Score: dateTime.Score,
+      setFormInputs({
+        Date: formInputs.Date,
+        StartTime: formInputs.StartTime,
+        EndTime: formInputs.EndTime,
+        Score: formInputs.Score,
       });
-      return difference(dateTime.StartTime, dateTime.EndTime), dateTime.Score;
-    };
-    //   axiosWithAuth.post(apiURL, data).then((res) => {
-    //     props.history.push("/sleep-routine");
 
-    // }
-    // );
+      return (
+        difference(formInputs.StartTime, formInputs.EndTime), formInputs.Score
+      );
+    };
   };
   const onChange = (e) => {
-    setDateTime({
-      ...dateTime,
-      [e.target.name]: e.target.value,
+    const { name, value } = e.target;
+    setFormInputs({
+      ...formInputs,
+      [name]: value,
     });
   };
 
@@ -63,45 +67,49 @@ export default function SleepList(props) {
         width="large"
         align="center"
       >
-        <Form onSubmit={AddDateTime((e) => e)}>
-          <input
-            type="date"
-            name="Date"
-            placeholder="Date"
-            onChange={(e) => onChange(e)}
-          />
-          <input
-            type="time"
-            name="StartTime"
-            value={dateTime.StartTime}
-            onChange={(e) => onChange(e)}
-          />
-          <input
-            type="time"
-            name="EndTime"
-            value={dateTime.EndTime}
-            onChange={(e) => onChange(e)}
-          />
+        <Form onSubmit={AddDateTime}>
+          <label>
+            Start
+            <input type="date" name="startDate" onChange={onChange} />
+            <input
+              type="time"
+              name="startTime"
+              value={formInputs.StartTime}
+              onChange={(e) => onChange(e)}
+            />
+          </label>
+
+          <br />
+          <label>
+            end
+            <input type="date" name="endDate" onChange={onChange} />
+            <input
+              type="time"
+              name="endTime"
+              value={formInputs.EndTime}
+              onChange={onChange}
+            />
+          </label>
+          <br />
           <select>
-            <option id="1" value={dateTime.Score}>
+            <option id="4" value={formInputs.Score}>
               😃
             </option>
-            <option id="2" value={dateTime.Score}>
+            <option id="3" value={formInputs.Score}>
               🙂
             </option>
-            <option id="3" value={dateTime.Score}>
+            <option id="2" value={formInputs.Score}>
               😐
             </option>
-            <option id="4" value={dateTime.Score}>
+            <option id="1" value={formInputs.Score}>
               😩
             </option>
           </select>
-          <input
-            type="submit"
-            onClick={console.log(dateTime.StartTime, dateTime.EndTime)}
-          />
+          <input type="submit" value="submit" />
         </Form>
       </Box>
     </Grommet>
   );
-}
+};
+
+export default connect(null, null)(AddEditSleepForm);
