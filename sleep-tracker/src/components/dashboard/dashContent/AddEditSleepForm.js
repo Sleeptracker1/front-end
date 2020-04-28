@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Box, FormField, Form, Grommet } from "grommet";
 import moment from "moment";
-import useLocalStorage from "../customHooks/useLocalStorage";
+
 //import axiosWithAuth
 
 export default function SleepList(props) {
@@ -14,7 +14,7 @@ export default function SleepList(props) {
   const [loading, setLoading] = useState(false);
   // const apiURL = ""
   const AddDateTime = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const data = {
       Date: dateTime.Date,
       StartTime: dateTime.StartTime,
@@ -43,7 +43,7 @@ export default function SleepList(props) {
       var res = moment(+diff).format("H:mm");
       return localStorage.setItem(res);
     }
-    console.log("res", res);
+
     return diff(start, end);
   }
 
@@ -59,7 +59,7 @@ export default function SleepList(props) {
         width="large"
         align="center"
       >
-        <Form onSubmit={AddDateTime(e)}>
+        <Form onSubmit={AddDateTime((e) => e)}>
           <input
             type="date"
             name="Date"
