@@ -14,24 +14,19 @@ export default function SleepList(props) {
   const [loading, setLoading] = useState(false);
   // const apiURL = ""
   const AddDateTime = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const data = {
       Date: dateTime.Date,
       StartTime: dateTime.StartTime,
       EndTime: dateTime.EndTime,
       Score: dateTime.Score,
     };
-    // axiosWithAuth.post(apiURL, data).then((res) => {
-    //   props.history.push("/sleep-routine");
-    alert(
-      `its Working!, difference ${difference(
-        dateTime.StartTime,
-        dateTime.EndTime
-      )}`
-    );
-  };
-  // );
+    //   axiosWithAuth.post(apiURL, difference(data.StartTime, data.EndTime)).then((res) => {
+    //     props.history.push("/sleep-routine");
 
+    // }
+    // );
+  };
   const onChange = (e) => {
     setDateTime({
       ...dateTime,
@@ -43,9 +38,13 @@ export default function SleepList(props) {
     console.log("difference", StartTime, EndTime);
     var end = moment(EndTime, "HH:mm");
     if (end.isBefore(start)) end.add(1, "day");
-    var diff = moment.duration(end.diff(start));
-    var res = moment(+diff).format("H:mm");
-    return res;
+    function diff(start, end) {
+      var diff = moment.duration(end.diff(start));
+      var res = moment(+diff).format("H:mm");
+      return localStorage.setItem(res);
+    }
+
+    return diff(start, end);
   }
 
   return (
@@ -60,13 +59,7 @@ export default function SleepList(props) {
         width="large"
         align="center"
       >
-        <Form
-          onSubmit={AddDateTime(
-            (e, StartTime, EndTime) => e,
-            StartTime,
-            EndTime
-          )}
-        >
+        <Form onSubmit={AddDateTime((e) => e)}>
           <input
             type="date"
             name="Date"
