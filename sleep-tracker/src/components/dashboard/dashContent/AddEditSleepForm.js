@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Box, FormField, Form, Grommet } from "grommet";
 import moment from "moment";
-
+import useLocalStorage from "../customHooks/useLocalStorage";
 //import axiosWithAuth
 
 export default function SleepList(props) {
@@ -21,12 +21,12 @@ export default function SleepList(props) {
       EndTime: dateTime.EndTime,
       Score: dateTime.Score,
     };
-    axiosWithAuth.post(apiURL, data).then((res) => {
-      props.history.push("/sleep-routine");
-   
-  }
-  );
-  }
+    //   axiosWithAuth.post(apiURL, difference(data.StartTime, data.EndTime)).then((res) => {
+    //     props.history.push("/sleep-routine");
+
+    // }
+    // );
+  };
   const onChange = (e) => {
     setDateTime({
       ...dateTime,
@@ -38,9 +38,13 @@ export default function SleepList(props) {
     console.log("difference", StartTime, EndTime);
     var end = moment(EndTime, "HH:mm");
     if (end.isBefore(start)) end.add(1, "day");
-    var diff = moment.duration(end.diff(start));
-    var res = moment(+diff).format("H:mm");
-    return res;
+    function diff(start, end) {
+      var diff = moment.duration(end.diff(start));
+      var res = moment(+diff).format("H:mm");
+      return localStorage.setItem(res);
+    }
+    console.log("res", res);
+    return diff(start, end);
   }
 
   return (
@@ -55,10 +59,7 @@ export default function SleepList(props) {
         width="large"
         align="center"
       >
-        <Form
-          onSubmit={AddDateTime(e)
-          }
-        >
+        <Form onSubmit={AddDateTime(e)}>
           <input
             type="date"
             name="Date"
