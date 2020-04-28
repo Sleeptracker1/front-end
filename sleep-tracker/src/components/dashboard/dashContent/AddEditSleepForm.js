@@ -21,11 +21,11 @@ export default function SleepList(props) {
       EndTime: dateTime.EndTime,
       Score: dateTime.Score,
     };
-    axiosWithAuth.post(apiURL, data).then((res) => {
-      props.history.push("/sleep-routine");
+  //   axiosWithAuth.post(apiURL, data).then((res) => {
+  //     props.history.push("/sleep-routine");
    
-  }
-  );
+  // }
+  // );
   }
   const onChange = (e) => {
     setDateTime({
@@ -56,8 +56,8 @@ export default function SleepList(props) {
         align="center"
       >
         <Form
-          onSubmit={AddDateTime(e)
-          }
+          // onSubmit={AddDateTime(e)
+          // }
         >
           <input
             type="date"
