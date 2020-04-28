@@ -31,11 +31,11 @@ const SleepLogForm = () => {
       ...logValues,
       startTime: startTime._i,
       endTime: endTime._i,
-  
+      // diff: diffDuration.hours(),
       rating: Number(formInputs.rating),
     });
   };
-
+  
   return (
     <div>
       <label>start</label>
@@ -65,7 +65,7 @@ const SleepLogForm = () => {
       />
       <button onClick={convertDate}>convert time</button>
       <p>time difference {logValues.diff} hours</p>
-      {console.log(logValues)}
+      
     </div>
   );
 };

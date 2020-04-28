@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Box, Form, Grommet } from "grommet";
 import moment from "moment";
@@ -9,46 +9,30 @@ const AddEditSleepForm = () => {
     startTime: "",
     endDate: "",
     endTime: "",
-    score: 0,
-  });
-  const [logValues, setLogValues] = useState({
-    startTime: "",
-    endTime: "",
     rating: 0,
   });
   const [loading, setLoading] = useState(false);
 
-  function difference(StartTime, EndTime) {
-    var start = moment(StartTime, "HH:mm");
-    console.log("difference", StartTime, EndTime);
-    var end = moment(EndTime, "HH:mm");
-    if (end.isBefore(start)) end.add(1, "day");
-
-    function diff(start, end) {
-      var diff = moment.duration(end.diff(start));
-      var res = moment(+diff).format("H:mm");
-      return localStorage.setItem(res);
-    }
-
-    return diff(start, end);
-  }
+  const evalutateTime = () => {
+    const start = moment(`${formInputs.startDate}T${formInputs.startTime}`);
+    const end = moment(`${formInputs.endDate}T${formInputs.endTime}`);
+    const diff = end.diff(start);
+    // const diffDuration = moment.duration(diff);
+    // console.log(diffDuration.hours())
+    return { start, end };
+  };
   const AddDateTime = (e) => {
     e.preventDefault();
-    const data = () => {
-      setFormInputs({
-        Date: formInputs.Date,
-        StartTime: formInputs.StartTime,
-        EndTime: formInputs.EndTime,
-        Score: formInputs.Score,
-      });
-
-      return (
-        difference(formInputs.StartTime, formInputs.EndTime), formInputs.Score
-      );
+    const { start, end } = evalutateTime();
+    const postValues = {
+      starTime: start._i,
+      endTime: end._i,
+      rating: Number(formInputs.rating),
     };
   };
   const onChange = (e) => {
     const { name, value } = e.target;
+    console.log(value);
     setFormInputs({
       ...formInputs,
       [name]: value,
@@ -74,8 +58,8 @@ const AddEditSleepForm = () => {
             <input
               type="time"
               name="startTime"
-              value={formInputs.StartTime}
-              onChange={(e) => onChange(e)}
+              value={formInputs.startTime}
+              onChange={onChange}
             />
           </label>
 
@@ -86,24 +70,16 @@ const AddEditSleepForm = () => {
             <input
               type="time"
               name="endTime"
-              value={formInputs.EndTime}
+              value={formInputs.endTime}
               onChange={onChange}
             />
           </label>
           <br />
-          <select>
-            <option id="4" value={formInputs.Score}>
-              😃
-            </option>
-            <option id="3" value={formInputs.Score}>
-              🙂
-            </option>
-            <option id="2" value={formInputs.Score}>
-              😐
-            </option>
-            <option id="1" value={formInputs.Score}>
-              😩
-            </option>
+          <select onChange={onChange} name="rating">
+            <option id="4">4</option>
+            <option id="3">3</option>
+            <option id="2">2</option>
+            <option id="1">1</option>
           </select>
           <input type="submit" value="submit" />
         </Form>
