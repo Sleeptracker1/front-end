@@ -5,8 +5,8 @@ import { Distribution, Grommet } from "grommet";
 export default function sleepDisplay() {
   return (
     <>
-      <h1>Sleep Graph</h1>
-      <h2>Sleep list</h2>
+      <SleepGraph />
+      <SleepList />
     </>
   );
 }

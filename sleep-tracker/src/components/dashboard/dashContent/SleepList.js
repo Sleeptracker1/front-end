@@ -1,5 +1,10 @@
 import React from "react";
-
+import SleepGraph from "./SleepGraph";
+import { Distribution, Grommet } from "grommet";
 export default function SleepList() {
-  return <h1>Sleep List</h1>;
+  return (
+    <>
+      <h2>Sleep list</h2>
+    </>
+  );
 }
