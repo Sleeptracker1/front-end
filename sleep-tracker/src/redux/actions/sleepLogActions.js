@@ -33,7 +33,7 @@ export const getLogs = () => async (dispatch) => {
 
 export const createLog = (logInputs) => async (dispatch) => {
   try {
-    const newLog = await axiosWithAuth().post(`/api/sleep`);
+    const newLog = await axiosWithAuth().post(`/api/sleep`, logInputs);
     dispatch({ type: POST_LOG, payload: newLog });
   } catch (err) {
     dispatch({ type: ERR_LOG, payload: err.message });
