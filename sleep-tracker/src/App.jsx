@@ -18,29 +18,23 @@ function App() {
           <DashStyles />
           <ul>
             <li>
-              <Link to={"/user-dashboard"}>User Dashboard</Link>
+              <PrivateRoute to={"/user-dashboard"}>User Dashboard</PrivateRoute>
             </li>
 
             <li>
-              <Link to={"/sleep-routine"}>Sleep Routine</Link>
+              <PrivateRoute to={"/sleep-routine"}>Sleep Routine</PrivateRoute>
             </li>
             <li>
-              <Link to={"/add-sleep-routine"}>Add Sleep Routine</Link>
+              <PrivateRoute to={"/add-sleep-routine"}>
+                Add Sleep Routine
+              </PrivateRoute>
             </li>
           </ul>
 
           <Switch>
-            <PrivateRoute
-              exact
-              path="/user-dashboard"
-              component={DashContainer}
-            />
-            <PrivateRoute
-              exact
-              path="/sleep-routine"
-              component={SleepDisplay}
-            />
-            <PrivateRoute
+            <Route exact path="/user-dashboard" component={DashContainer} />
+            <Route exact path="/sleep-routine" component={SleepDisplay} />
+            <Route
               exact
               path="/add-sleep-routine"
               component={AddEditSleepForm}

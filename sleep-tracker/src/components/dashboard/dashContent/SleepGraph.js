@@ -1,48 +1,48 @@
 import React, { useState, useEffect } from "react";
 import { Distribution, Box, Grommet, Chart } from "grommet";
 import ClockLoader from "react-spinners/ClockLoader";
-import axiosWithAuth from "./utils/axiosWithAuth";
-export default function SleepGraph() {
-  const [data, setData] = useState({ sleepData: [], mode: "view" });
+import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
+import { axiosWithAuth } from "./utils/axiosWithAuth";
+export default function SleepGraph(props) {
+  const [data, setData] = useState([
+    { score: "", start_time: "", end_time: "" },
+  ]);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    // setIsLoading(true);
-    //axiosWithAuth()
-    //.get("")
-    //.then((res) => {
-    // console.log("res in sleep list,", res)
-    // setData({sleepData: res.data, mode: 'view'})
-    // setIsLoading(false)
-    // })
+    setIsLoading(true);
+    axiosWithAuth()
+      .get("https://bw-ft-sleep-tracker-1.herokuapp.com/api/sleep/1")
+      .then((res) => {
+        console.log("res in sleep graph,", res);
+        setData({
+          score: res.data[2],
+          start_time: res.data[3],
+          end_time: res.data[4],
+        });
+      });
+    setIsLoading(false);
   }, []);
   return (
     <Grommet>
-      {/* <Chart type="line" values={[
-    data.map((d => {
-      
-    }))
-  ]}> */}
-
-      {/* </Chart> */}
+      {isLoading ? <ClockLoader /> : null}
       <Box
         direction="column"
         pad="small"
         animation="slideLeft"
         background="light-2"
       >
-        <Chart
-          type="point"
-          bounds={[
-            [0, 4],
-            [0, 24],
-          ]}
-          values={[
-            { value: [7, 5], label: "4/20" },
-            { value: [6, 7], label: "4/21" },
-            { value: [5, 8], label: "4/22" },
-            { value: [4, 10], label: "4/23" },
-          ]}
-          aria-label="chart"
-        />
+        <LineChart
+          width={800}
+          height={400}
+          data={data}
+          margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+        >
+          <Line type="monotone" dataKey="score" stroke="#8884d8" />
+          <CartesianGrid stroke="ccc" strokeDasharray="2 2" />
+          <XAxis dataKey="start_time" />
+          <YAxis dataKey="end_time" />
+        </LineChart>
+
         <Box direction="column"></Box>
       </Box>
     </Grommet>
