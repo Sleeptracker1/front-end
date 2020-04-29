@@ -20,7 +20,7 @@ const StyledForm = styled.form`
 
 const RegistrationForm = ({ registerUser }) => {
   const formSchema = yup.object().shape({
-    name: yup
+    username: yup
       .string()
       .required("User Name is a required field.")
       .min(2, "minimum four characters")
@@ -30,14 +30,14 @@ const RegistrationForm = ({ registerUser }) => {
   });
 
   const [formState, setFormState] = useState({
-    name: "",
+    username: "",
     password: "",
   });
 
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
 
   const [validationErrors, setValidationErrors] = useState({
-    name: "",
+    username: "",
     password: "",
   });
 
@@ -96,13 +96,13 @@ const RegistrationForm = ({ registerUser }) => {
             </InputAdornment>
           }
           type="text"
-          name="name"
+          name="username"
           id="userNameBox"
           placeholder="Desired User Name"
           value={formState.name}
           onChange={inputChange}
         />
-        {validationErrors.name.length > 0 ? (
+        {validationErrors.username.length > 0 ? (
           <p> {validationErrors.name}</p>
         ) : null}
 
