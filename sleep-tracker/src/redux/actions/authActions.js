@@ -21,7 +21,7 @@ export const registerUser = (credentials, redirect) => async (dispatch) => {
   try {
     const user = await axiosWithAuth().post("/api/users/register", credentials);
     dispatch({ type: REGISTER_USER, payload: user });
-    // redirect();
+    redirect();
   } catch (err) {
     dispatch({ type: AUTH_ERROR, payload: err.message });
   }

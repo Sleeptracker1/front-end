@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import * as yup from "yup";
 import Button from "@material-ui/core/Button";
-
+import { useHistory } from "react-router-dom";
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import AccountCircle from "@material-ui/icons/AccountCircle";
@@ -19,6 +19,7 @@ const StyledForm = styled.form`
 `;
 
 const RegistrationForm = ({ registerUser }) => {
+  const { push } = useHistory();
   const formSchema = yup.object().shape({
     username: yup
       .string()
@@ -82,6 +83,9 @@ const RegistrationForm = ({ registerUser }) => {
   const submitPostRequest = (event) => {
     event.preventDefault();
     console.log(formState);
+    registerUser(formState, () => {
+      push("/login");
+    });
   };
 
   return (
