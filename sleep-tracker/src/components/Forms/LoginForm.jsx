@@ -1,0 +1,154 @@
+import React from "react";
+import styled from "styled-components";
+import { useState, useEffect } from "react";
+import * as yup from "yup";
+import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
+import Input from "@material-ui/core/Input";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import { loginUser } from "../../redux/actions/authActions";
+
+const StyledForm = styled.form`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 50px;
+`;
+
+const LoginForm = ({ loginUser }) => {
+  const { push } = useHistory();
+
+  const formSchema = yup.object().shape({
+    username: yup
+      .string()
+      .required("User Name is a required field.")
+      .min(2, "minimum four characters")
+      .max(20, "max twenty characters"),
+
+    password: yup.string().required().min(6, "must be at least six characters"),
+  });
+
+  const [formState, setFormState] = useState({
+    username: "",
+    password: "",
+  });
+
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
+
+  const [validationErrors, setValidationErrors] = useState({
+    username: "",
+    password: "",
+  });
+
+  useEffect(() => {
+    formSchema.isValid(formState).then((valid) => {
+      setSubmitButtonDisabled(!valid);
+    });
+  }, [formState, formSchema]);
+
+  const inputChange = (event) => {
+    event.persist();
+    const validateChangeState = {
+      ...formState,
+      [event.target.name]: event.target.value,
+    };
+    validateChange(event);
+    setFormState(validateChangeState);
+  };
+
+  const validateChange = (event) => {
+    yup
+      .reach(formSchema, event.target.name)
+      .validate(event.target.value)
+      .then((valid) => {
+        setValidationErrors({
+          ...validationErrors,
+          [event.target.name]: "",
+        });
+      })
+      .catch((error) => {
+        
+        setValidationErrors({
+          ...validationErrors,
+          [event.target.name]: error.message,
+        });
+      });
+  };
+
+  const submitPostRequest = (event) => {
+    event.preventDefault();
+    loginUser(formState, () => {
+      push("/user-dashboard");
+    });
+  };
+
+  return (
+    <div>
+      <StyledForm onSubmit={submitPostRequest}>
+        <label htmlFor="userNameBox"></label>
+        <Input
+          color="secondary"
+          startAdornment={
+            <InputAdornment position="start">
+              <AccountCircle />
+            </InputAdornment>
+          }
+          type="text"
+          name="username"
+          id="userNameBox"
+          placeholder="Your User Name"
+          value={formState.username}
+          onChange={inputChange}
+        />
+        {validationErrors.username.length > 0 ? (
+          <p> {validationErrors.username}</p>
+        ) : null}
+
+        <label htmlFor="passwordBox"></label>
+        <Input
+          style={{ marginTop: "3vh", marginBottom: "3vh" }}
+          color="secondary"
+          startAdornment={
+            <InputAdornment position="start">
+              <LockOpenIcon />
+            </InputAdornment>
+          }
+          type="password"
+          name="password"
+          id="passwordBox"
+          placeholder="Password"
+          value={formState.password}
+          onChange={inputChange}
+        />
+        {validationErrors.password.length > 0 ? (
+          <p> {validationErrors.password}</p>
+        ) : null}
+
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          disabled={submitButtonDisabled}
+        >
+          Submit
+        </Button>
+        <p>Not registered yet?</p>
+        <NavLink style={{ textDecoration: "none" }} to="/register">
+          {" "}
+          <Button variant="contained" color="primary" type="submit">
+            Register
+          </Button>
+        </NavLink>
+      </StyledForm>
+    </div>
+  );
+};
+const actions = {
+  loginUser,
+};
+export default connect(null, actions)(LoginForm);
