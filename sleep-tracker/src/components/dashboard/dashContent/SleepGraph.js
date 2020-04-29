@@ -13,16 +13,16 @@ export default function SleepGraph(props) {
       .get("api/sleep/")
       .then((res) => {
         console.log("res in sleep graph,", res);
-        setData([...data, res.data]);
+        setData(res.data);
       });
     setIsLoading(false);
   }, []);
 
-  const graphData = data.forEach((result) => {
+  const graphData = data.map((result) => {
     const diff2 = moment(result.end_time).diff(moment(result.start_time));
     const diffDuration = moment.duration(diff2);
     console.log("res in sleep graph map", result);
-    const start_date = moment(result.start_time).format("MMMM Do YYYY");
+    const start_date = moment(result.start_time).format("MMM Do");
     const time_slept = diffDuration.hours();
     const dataFromGraphData = {
       start_date,

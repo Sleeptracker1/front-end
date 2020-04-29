@@ -24,7 +24,7 @@ function App({ loggedIn }) {
           </li>
 
           <li>
-            <PrivateRoute to={"/sleep-routine"}>Sleep Routine</PrivateRoute>
+            <Link to={"/sleep-routine"}>Sleep Routine</Link>
           </li>
           <li>
             <PrivateRoute to={"/add-sleep-routine"}>
