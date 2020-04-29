@@ -1,34 +1,37 @@
 import React, { useState, useEffect } from "react";
 import SleepGraph from "./SleepGraph";
 import { Distribution, Grommet, Box, Button } from "grommet";
+import { useParams, useHistory } from "react-router-dom";
 import ClockLoader from "react-spinners/ClockLoader";
+import { axiosWithAuth } from "./utils/axiosWithAuth";
 
 export default function SleepList(props) {
-  const [data, setData] = useState({ sleepData: [], mode: "view" });
+  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  useEffect(() => {
+  useEffect((user_id) => {
     setIsLoading(true);
-    //axiosWithAuth()
-    //.get("")
-    //.then((res) => {
-    // console.log("res in sleep list,", res)
-    // setData({sleepData: res.data, mode: 'view'})
-    // setIsLoading(false)
-    // })
+    axiosWithAuth()
+      .get(`https://bw-ft-sleep-tracker-1.herokuapp.com/api/sleep/`)
+      .then((res) => {
+        console.log("res in sleep list,", res);
+        setData(res.data);
+        setIsLoading(false);
+      });
   }, []);
   const Delete = (id) => {
-    //axiosWithAuth()
-    //  .delete(``)
-    // .then((res) => {
-    //   props.history.push("/sleep-routine")
-    //   setData({sleepData: res.data, mode: 'view'})
-    //setIsLoading(false)
-    // })
+    axiosWithAuth()
+      .delete(`https://bw-ft-sleep-tracker-1.herokuapp.com/api/sleep/${id}`)
+      .then((res) => {
+        props.history.push("/sleep-routine");
+        setData(res.data);
+        setIsLoading(false);
+      });
   };
-
-  const Edit = (id) => {
-    //  props.history.push(``)
-  };
+  const { push } = useHistory();
+  const { id } = useParams();
+  // const Edit = (props) => {
+  //   push("/add-sleep-routine");
+  // };
   return (
     <Grommet>
       <Box
@@ -37,24 +40,30 @@ export default function SleepList(props) {
         animation="slideRight"
         background="dark-2"
       >
-        {/* {isLoading ? <ClockLoader /> : null} */}
-        {/*data.map((d => ( */}
-        <>
-          <Box direction="row" pad="small" background="dark-1" margin="small">
-            {/*<h3>{d}</h3>*/}
-            <h2>Sleepdata</h2>
-          </Box>
-          <Box direction="row" pad="small" background="dark-1" margin="small">
-            <h2>Sleepdata</h2>
-          </Box>
-          <Box direction="row" pad="small" background="dark-1" margin="small">
-            <h2>Sleepdata</h2>
-          </Box>
-          {/*<Button label="delete" onClick={Delete(data.id)}>X<Button>
-        <Button label="edit" onClick={Edit(data.id)}>EDIT<Button>*/}
+        {isLoading ? <ClockLoader /> : null}
+        <Box direction="row">
+          {data.map((d) => (
+            <>
+              <Box>
+                <h2>{d.score}</h2>
+              </Box>
+              <Box>
+                <h2>{d.start_time}</h2>
+              </Box>
 
-          {/* // ))) */}
-        </>
+              <Box>
+                <h2>{d.end_time}</h2>
+              </Box>
+
+              <Button label="delete" onClick={Delete(data.user_id)}>
+                X
+              </Button>
+              {/* <Button label="edit" onClick={Edit(data.user_id)}>
+                EDIT
+              </Button> */}
+            </>
+          ))}
+        </Box>
       </Box>
     </Grommet>
   );

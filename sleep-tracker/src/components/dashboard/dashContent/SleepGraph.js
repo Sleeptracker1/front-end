@@ -1,48 +1,58 @@
 import React, { useState, useEffect } from "react";
 import { Distribution, Box, Grommet, Chart } from "grommet";
 import ClockLoader from "react-spinners/ClockLoader";
-import axiosWithAuth from "./utils/axiosWithAuth";
-export default function SleepGraph() {
-  const [data, setData] = useState({ sleepData: [], mode: "view" });
+import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
+import { axiosWithAuth } from "./utils/axiosWithAuth";
+import moment from "moment";
+export default function SleepGraph(props) {
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    // setIsLoading(true);
-    //axiosWithAuth()
-    //.get("")
-    //.then((res) => {
-    // console.log("res in sleep list,", res)
-    // setData({sleepData: res.data, mode: 'view'})
-    // setIsLoading(false)
-    // })
+    setIsLoading(true);
+    axiosWithAuth()
+      .get("api/sleep/")
+      .then((res) => {
+        console.log("res in sleep graph,", res);
+        setData([...data, res.data]);
+      });
+    setIsLoading(false);
   }, []);
+
+  const graphData = data.forEach((result) => {
+    const diff2 = moment(result.end_time).diff(moment(result.start_time));
+    const diffDuration = moment.duration(diff2);
+    console.log("res in sleep graph map", result);
+    const start_date = moment(result.start_time).format("MMMM Do YYYY");
+    const time_slept = diffDuration.hours();
+    const dataFromGraphData = {
+      start_date,
+      time_slept,
+    };
+    return dataFromGraphData;
+  });
+
   return (
     <Grommet>
-      {/* <Chart type="line" values={[
-    data.map((d => {
-      
-    }))
-  ]}> */}
-
-      {/* </Chart> */}
+      {isLoading ? <ClockLoader /> : null}
+      {console.log("graphdata", graphData)}
       <Box
         direction="column"
         pad="small"
         animation="slideLeft"
         background="light-2"
       >
-        <Chart
-          type="point"
-          bounds={[
-            [0, 4],
-            [0, 24],
-          ]}
-          values={[
-            { value: [7, 5], label: "4/20" },
-            { value: [6, 7], label: "4/21" },
-            { value: [5, 8], label: "4/22" },
-            { value: [4, 10], label: "4/23" },
-          ]}
-          aria-label="chart"
-        />
+        <LineChart
+          width={1200}
+          height={600}
+          data={graphData}
+          margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+        >
+          <Line type="monotone" dataKey="time_slept" stroke="red" />
+          <CartesianGrid stroke="ccc" strokeDasharray="2 2" />
+          <XAxis dataKey="start_date" interval={2} />
+          <YAxis dataKey="time_slept" />
+        </LineChart>
+
         <Box direction="column"></Box>
       </Box>
     </Grommet>
