@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Switch, Link } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import DashContainer from "./components/dashboard/dashContainer";
-import SleepLogForm from "./components/sleepLog/sleepLogForm/sleepLogForm";
 import { DashStyles } from "./styled-component/dashboardContainer";
 import { lightTheme, darkTheme } from "./styled-component/theme";
 import { Grommet } from "grommet";

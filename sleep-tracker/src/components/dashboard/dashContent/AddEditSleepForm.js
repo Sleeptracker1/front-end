@@ -1,53 +1,48 @@
-import React, { useState, useEffect } from "react";
-import { Box, FormField, Form, Grommet } from "grommet";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { Box, Form, Grommet } from "grommet";
 import moment from "moment";
 
-//import axiosWithAuth
+import { createLog } from "../../../redux/actions/sleepLogActions";
 
-export default function SleepList(props) {
-  const [dateTime, setDateTime] = useState({
-    Date: "",
-    StartTime: "",
-    EndTime: "",
-    Score: [],
+const AddEditSleepForm = ({ createLog }) => {
+  const [formInputs, setFormInputs] = useState({
+    startDate: "",
+    startTime: "",
+    endDate: "",
+    endTime: "",
+    rating: 0,
   });
-  function difference(StartTime, EndTime) {
-    var start = moment(StartTime, "HH:mm");
-    console.log("difference", StartTime, EndTime);
-    var end = moment(EndTime, "HH:mm");
-    if (end.isBefore(start)) end.add(1, "day");
-
-    function diff(start, end) {
-      var diff = moment.duration(end.diff(start));
-      var res = moment(+diff).format("H:mm");
-      return localStorage.setItem(res);
-    }
-
-    return diff(start, end);
-  }
   const [loading, setLoading] = useState(false);
-  // const apiURL = ""
-  const AddDateTime = (e) => {
-    // e.preventDefault();
-    const data = () => {
-      setDateTime({
-        Date: dateTime.Date,
-        StartTime: dateTime.StartTime,
-        EndTime: dateTime.EndTime,
-        Score: dateTime.Score,
-      });
-      return difference(dateTime.StartTime, dateTime.EndTime), dateTime.Score;
-    };
-    //   axiosWithAuth.post(apiURL, data).then((res) => {
-    //     props.history.push("/sleep-routine");
 
-    // }
-    // );
+  const evalutateTime = () => {
+    const start = moment(`${formInputs.startDate}T${formInputs.startTime}`);
+    const end = moment(`${formInputs.endDate}T${formInputs.endTime}`);
+    const diff = end.diff(start);
+    // const diffDuration = moment.duration(diff);
+    // console.log(diffDuration.hours())
+    return { start, end };
+  };
+  const AddDateTime = (e) => {
+    e.preventDefault();
+    const { start, end } = evalutateTime();
+    const postValues = {
+      start_time: start._i,
+      end_time: end._i,
+      score: Number(formInputs.rating),
+      users_id: 7,
+      notes: "another test",
+    };
+    let json = JSON.stringify(postValues);
+    console.log(json);
+    createLog(postValues);
   };
   const onChange = (e) => {
-    setDateTime({
-      ...dateTime,
-      [e.target.name]: e.target.value,
+    const { name, value } = e.target;
+    console.log(value);
+    setFormInputs({
+      ...formInputs,
+      [name]: value,
     });
   };
 
@@ -63,45 +58,43 @@ export default function SleepList(props) {
         width="large"
         align="center"
       >
-        <Form onSubmit={AddDateTime((e) => e)}>
-          <input
-            type="date"
-            name="Date"
-            placeholder="Date"
-            onChange={(e) => onChange(e)}
-          />
-          <input
-            type="time"
-            name="StartTime"
-            value={dateTime.StartTime}
-            onChange={(e) => onChange(e)}
-          />
-          <input
-            type="time"
-            name="EndTime"
-            value={dateTime.EndTime}
-            onChange={(e) => onChange(e)}
-          />
-          <select>
-            <option id="1" value={dateTime.Score}>
-              😃
-            </option>
-            <option id="2" value={dateTime.Score}>
-              🙂
-            </option>
-            <option id="3" value={dateTime.Score}>
-              😐
-            </option>
-            <option id="4" value={dateTime.Score}>
-              😩
-            </option>
+        <Form onSubmit={AddDateTime}>
+          <label>
+            Start
+            <input type="date" name="startDate" onChange={onChange} />
+            <input
+              type="time"
+              name="startTime"
+              value={formInputs.startTime}
+              onChange={onChange}
+            />
+          </label>
+
+          <br />
+          <label>
+            end
+            <input type="date" name="endDate" onChange={onChange} />
+            <input
+              type="time"
+              name="endTime"
+              value={formInputs.endTime}
+              onChange={onChange}
+            />
+          </label>
+          <br />
+          <select onChange={onChange} name="rating">
+            <option id="4">4</option>
+            <option id="3">3</option>
+            <option id="2">2</option>
+            <option id="1">1</option>
           </select>
-          <input
-            type="submit"
-            onClick={console.log(dateTime.StartTime, dateTime.EndTime)}
-          />
+          <input type="submit" value="submit" />
         </Form>
       </Box>
     </Grommet>
   );
-}
+};
+const actions = {
+  createLog,
+};
+export default connect(null, actions)(AddEditSleepForm);

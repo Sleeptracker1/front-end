@@ -3,6 +3,7 @@ import { Distribution, Box, Grommet, Chart } from "grommet";
 import ClockLoader from "react-spinners/ClockLoader";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
 import { axiosWithAuth } from "./utils/axiosWithAuth";
+import moment from "moment";
 export default function SleepGraph(props) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -12,17 +13,28 @@ export default function SleepGraph(props) {
       .get("api/sleep/")
       .then((res) => {
         console.log("res in sleep graph,", res);
-        // setData({
-        //   score: res.data[2],
-        //   start_time: res.data[3],
-        //   end_time: res.data[4],
-        // });
+        setData([...data, res.data]);
       });
     setIsLoading(false);
   }, []);
+
+  const graphData = data.forEach((result) => {
+    const diff2 = moment(result.end_time).diff(moment(result.start_time));
+    const diffDuration = moment.duration(diff2);
+    console.log("res in sleep graph map", result);
+    const start_date = moment(result.start_time).format("MMMM Do YYYY");
+    const time_slept = diffDuration.hours();
+    const dataFromGraphData = {
+      start_date,
+      time_slept,
+    };
+    return dataFromGraphData;
+  });
+
   return (
     <Grommet>
       {isLoading ? <ClockLoader /> : null}
+      {console.log("graphdata", graphData)}
       <Box
         direction="column"
         pad="small"
@@ -30,15 +42,15 @@ export default function SleepGraph(props) {
         background="light-2"
       >
         <LineChart
-          width={800}
-          height={400}
-          data={Object.assign({}, [data])}
+          width={1200}
+          height={600}
+          data={graphData}
           margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
         >
-          <Line type="monotone" dataKey="score" stroke="#8884d8" />
+          <Line type="monotone" dataKey="time_slept" stroke="red" />
           <CartesianGrid stroke="ccc" strokeDasharray="2 2" />
-          <XAxis dataKey="start_time" />
-          <YAxis dataKey="end_time" />
+          <XAxis dataKey="start_date" interval={2} />
+          <YAxis dataKey="time_slept" />
         </LineChart>
 
         <Box direction="column"></Box>
