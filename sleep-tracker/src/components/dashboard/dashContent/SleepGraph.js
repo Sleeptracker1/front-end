@@ -4,21 +4,19 @@ import ClockLoader from "react-spinners/ClockLoader";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
 import { axiosWithAuth } from "./utils/axiosWithAuth";
 export default function SleepGraph(props) {
-  const [data, setData] = useState([
-    { score: "", start_time: "", end_time: "" },
-  ]);
+  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     setIsLoading(true);
     axiosWithAuth()
-      .get("https://bw-ft-sleep-tracker-1.herokuapp.com/api/sleep/1")
+      .get("api/sleep/")
       .then((res) => {
         console.log("res in sleep graph,", res);
-        setData({
-          score: res.data[2],
-          start_time: res.data[3],
-          end_time: res.data[4],
-        });
+        // setData({
+        //   score: res.data[2],
+        //   start_time: res.data[3],
+        //   end_time: res.data[4],
+        // });
       });
     setIsLoading(false);
   }, []);
@@ -34,7 +32,7 @@ export default function SleepGraph(props) {
         <LineChart
           width={800}
           height={400}
-          data={data}
+          data={Object.assign({}, [data])}
           margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
         >
           <Line type="monotone" dataKey="score" stroke="#8884d8" />

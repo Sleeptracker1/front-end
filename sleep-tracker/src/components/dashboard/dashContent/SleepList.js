@@ -10,7 +10,7 @@ export default function SleepList(props) {
   useEffect((user_id) => {
     setIsLoading(true);
     axiosWithAuth()
-      .get(`https://bw-ft-sleep-tracker-1.herokuapp.com/api/sleep/1`)
+      .get(`https://bw-ft-sleep-tracker-1.herokuapp.com/api/sleep/`)
       .then((res) => {
         console.log("res in sleep list,", res);
         setData(res.data);
