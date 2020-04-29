@@ -1,5 +1,6 @@
 import React from "react";
-import { Route, Switch, Link } from "react-router-dom";
+import { Route, Switch, Link, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import DashContainer from "./components/dashboard/dashContainer";
 import { DashStyles } from "./styled-component/dashboardContainer";
@@ -11,7 +12,9 @@ import Links from "./components/dashboard/dashSidebar/Links";
 import PrivateRoute from "./components/PrivateRoute";
 import LoginForm from "./components/Forms/LoginForm";
 import RegistrationForm from "./components/Forms/RegistrationForm";
-function App() {
+
+function App({ loggedIn }) {
+  const { push } = useHistory();
   return (
     <div className="App">
       <Grommet plain>
@@ -34,9 +37,9 @@ function App() {
           <Route exact path="/login" component={LoginForm} />
           <Route exact path="/register" component={RegistrationForm} />
           <Switch>
-            <Route exact path="/user-dashboard" component={DashContainer} />
-            <Route exact path="/sleep-routine" component={SleepDisplay} />
-            <Route
+            <PrivateRoute exact path="/user-dashboard" component={DashContainer} />
+            <PrivateRoute exact path="/sleep-routine" component={SleepDisplay} />
+            <PrivateRoute
               exact
               path="/add-sleep-routine"
               component={AddEditSleepForm}
@@ -47,10 +50,7 @@ function App() {
     </div>
   );
 }
-
-export default App;
-
-{
-  /* < Route exact path="/" component={LoginForm} />
-< Route exact path="/registration" component={RegistrationForm} />  */
-}
+const mapState = (state) => ({
+  loggedIn: state.auth.loggedIn,
+});
+export default connect(mapState, null)(App);

@@ -5,13 +5,14 @@ import moment from "moment";
 
 import { createLog } from "../../../redux/actions/sleepLogActions";
 
-const AddEditSleepForm = ({ createLog }) => {
+const AddEditSleepForm = ({ createLog, userId }) => {
   const [formInputs, setFormInputs] = useState({
     startDate: "",
     startTime: "",
     endDate: "",
     endTime: "",
     rating: 0,
+    notes: "",
   });
   const [loading, setLoading] = useState(false);
 
@@ -19,8 +20,6 @@ const AddEditSleepForm = ({ createLog }) => {
     const start = moment(`${formInputs.startDate}T${formInputs.startTime}`);
     const end = moment(`${formInputs.endDate}T${formInputs.endTime}`);
     const diff = end.diff(start);
-    // const diffDuration = moment.duration(diff);
-    // console.log(diffDuration.hours())
     return { start, end };
   };
   const AddDateTime = (e) => {
@@ -30,16 +29,14 @@ const AddEditSleepForm = ({ createLog }) => {
       start_time: start._i,
       end_time: end._i,
       score: Number(formInputs.rating),
-      users_id: 7,
-      notes: "another test",
+      users_id: userId,
+      notes: formInputs.notes,
     };
-    let json = JSON.stringify(postValues);
-    console.log(json);
     createLog(postValues);
   };
   const onChange = (e) => {
     const { name, value } = e.target;
-    console.log(value);
+
     setFormInputs({
       ...formInputs,
       [name]: value,
@@ -88,6 +85,12 @@ const AddEditSleepForm = ({ createLog }) => {
             <option id="2">2</option>
             <option id="1">1</option>
           </select>
+          <input
+            type="textarea"
+            name="notes"
+            value={formInputs.notes}
+            onChange={onChange}
+          />
           <input type="submit" value="submit" />
         </Form>
       </Box>
@@ -97,4 +100,7 @@ const AddEditSleepForm = ({ createLog }) => {
 const actions = {
   createLog,
 };
-export default connect(null, actions)(AddEditSleepForm);
+const mapState = (state) => ({
+  userId: state.auth.currentUser.userId,
+});
+export default connect(mapState, actions)(AddEditSleepForm);

@@ -18,7 +18,7 @@ const loginUser = (state = initialState, payload) => {
     return {
       ...state,
       loggedIn: true,
-      currentUser: payload.user,
+      currentUser: payload,
       loadingUser: false,
     };
   }
