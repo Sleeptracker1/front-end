@@ -28,7 +28,7 @@ const AddEditSleepForm = ({ createLog, userId }) => {
     const postValues = {
       start_time: start._i,
       end_time: end._i,
-      score: Number(formInputs.rating),
+      score: parseInt(formInputs.rating),
       users_id: userId,
       notes: formInputs.notes,
     };

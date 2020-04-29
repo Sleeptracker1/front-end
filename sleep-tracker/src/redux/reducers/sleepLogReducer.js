@@ -57,7 +57,11 @@ const deleteLog = (state = initialState, payload) => {
   if (payload) {
     return {
       ...state,
-      //update logs state here
+      sleepLog: [
+        ...state.sleepLog.filter((log) => {
+          return log.sleep_record_id !== payload.sleep_record_id;
+        }),
+      ],
     };
   }
 };
