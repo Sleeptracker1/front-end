@@ -27,7 +27,6 @@ export const getLogs = () => async (dispatch) => {
     const sleepLog = await axiosWithAuth().get(`/api/sleep/${userId}`);
     dispatch({ type: FETCH_LOGS, payload: sleepLog });
   } catch (err) {
-    console.log(err.message);
     dispatch({ type: ERR_LOG, payload: err.message });
   }
 };
@@ -36,6 +35,14 @@ export const createLog = (logInputs) => async (dispatch) => {
   try {
     const newLog = await axiosWithAuth().post(`/api/sleep`, logInputs);
     dispatch({ type: POST_LOG, payload: newLog.data });
+  } catch (err) {
+    dispatch({ type: ERR_LOG, payload: err.message });
+  }
+};
+
+export const deleteLog = (logId) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_LOG, payload: logId });
   } catch (err) {
     dispatch({ type: ERR_LOG, payload: err.message });
   }

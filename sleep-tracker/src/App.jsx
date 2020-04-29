@@ -14,39 +14,41 @@ import LoginForm from "./components/Forms/LoginForm";
 import RegistrationForm from "./components/Forms/RegistrationForm";
 
 function App({ loggedIn }) {
-  const { push } = useHistory();
   return (
     <div className="App">
-      <Grommet plain>
-        <ThemeProvider theme={lightTheme}>
-          <DashStyles />
-          <ul>
-            <li>
-              <PrivateRoute to={"/user-dashboard"}>User Dashboard</PrivateRoute>
-            </li>
+      <ThemeProvider theme={lightTheme}>
+        <DashStyles />
+        <ul>
+          <li>
+            <PrivateRoute to={"/user-dashboard"}>User Dashboard</PrivateRoute>
+          </li>
 
-            <li>
-              <PrivateRoute to={"/sleep-routine"}>Sleep Routine</PrivateRoute>
-            </li>
-            <li>
-              <PrivateRoute to={"/add-sleep-routine"}>
-                Add Sleep Routine
-              </PrivateRoute>
-            </li>
-          </ul>
-          <Route exact path="/login" component={LoginForm} />
-          <Route exact path="/register" component={RegistrationForm} />
-          <Switch>
-            <PrivateRoute exact path="/user-dashboard" component={DashContainer} />
-            <PrivateRoute exact path="/sleep-routine" component={SleepDisplay} />
-            <PrivateRoute
-              exact
-              path="/add-sleep-routine"
-              component={AddEditSleepForm}
-            />
-          </Switch>
-        </ThemeProvider>
-      </Grommet>
+          <li>
+            <PrivateRoute to={"/sleep-routine"}>Sleep Routine</PrivateRoute>
+          </li>
+          <li>
+            <PrivateRoute to={"/add-sleep-routine"}>
+              Add Sleep Routine
+            </PrivateRoute>
+          </li>
+        </ul>
+        <Route exact path="/" component={LoginForm} />
+        <Route exact path="/login" component={LoginForm} />
+        <Route exact path="/register" component={RegistrationForm} />
+        <Switch>
+          <PrivateRoute
+            exact
+            path="/user-dashboard"
+            component={DashContainer}
+          />
+          <PrivateRoute exact path="/sleep-routine" component={SleepDisplay} />
+          <PrivateRoute
+            exact
+            path="/add-sleep-routine"
+            component={AddEditSleepForm}
+          />
+        </Switch>
+      </ThemeProvider>
     </div>
   );
 }

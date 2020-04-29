@@ -47,7 +47,6 @@ const LoginForm = ({ loginUser }) => {
 
   useEffect(() => {
     formSchema.isValid(formState).then((valid) => {
-      console.log(valid);
       setSubmitButtonDisabled(!valid);
     });
   }, [formState, formSchema]);
@@ -73,7 +72,7 @@ const LoginForm = ({ loginUser }) => {
         });
       })
       .catch((error) => {
-        console.log(error);
+        
         setValidationErrors({
           ...validationErrors,
           [event.target.name]: error.message,
@@ -83,7 +82,6 @@ const LoginForm = ({ loginUser }) => {
 
   const submitPostRequest = (event) => {
     event.preventDefault();
-    console.log(formState);
     loginUser(formState, () => {
       push("/user-dashboard");
     });
