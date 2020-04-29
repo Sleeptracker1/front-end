@@ -3,15 +3,14 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import * as yup from "yup";
 import Button from "@material-ui/core/Button";
-import axios from "axios";
+import { useHistory } from "react-router-dom";
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
-import {NavLink} from 'react-router-dom'
-//import posed, { PoseGroup } from 'react-pose';
-
-
+import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import { loginUser } from "../../redux/actions/authActions";
 
 const StyledForm = styled.form`
   display: flex;
@@ -21,9 +20,11 @@ const StyledForm = styled.form`
   margin-top: 50px;
 `;
 
-const LoginForm = () => {
+const LoginForm = ({ loginUser }) => {
+  const { push } = useHistory();
+
   const formSchema = yup.object().shape({
-    name: yup
+    username: yup
       .string()
       .required("User Name is a required field.")
       .min(2, "minimum four characters")
@@ -33,19 +34,16 @@ const LoginForm = () => {
   });
 
   const [formState, setFormState] = useState({
-    name: "",
+    username: "",
     password: "",
   });
 
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
 
   const [validationErrors, setValidationErrors] = useState({
-    name: "",
+    username: "",
     password: "",
   });
-
-  //const [postRequestData, setPostRequestData] = useState([]);
-  
 
   useEffect(() => {
     formSchema.isValid(formState).then((valid) => {
@@ -85,16 +83,10 @@ const LoginForm = () => {
 
   const submitPostRequest = (event) => {
     event.preventDefault();
-    console.log("submitted");
-    // axios
-    //   .post("https://bw-ft-sleep-tracker-1.herokuapp.com/api/users/login", formState)
-    //   .then((response) => {
-    //     setPostRequestData([...postRequestData, response.data]);
-    //     console.log("success", response);
-    //   })
-    //   .catch((submissionError) => {
-    //     console.log(submissionError.response);
-    //   });
+    console.log(formState);
+    loginUser(formState, () => {
+      push("/user-dashboard");
+    });
   };
 
   return (
@@ -109,18 +101,19 @@ const LoginForm = () => {
             </InputAdornment>
           }
           type="text"
-          name="name"
+          name="username"
           id="userNameBox"
           placeholder="Your User Name"
-          value={formState.name}
+          value={formState.username}
           onChange={inputChange}
         />
-        {validationErrors.name.length > 0 ? (
-          <p> {validationErrors.name}</p>
+        {validationErrors.username.length > 0 ? (
+          <p> {validationErrors.username}</p>
         ) : null}
 
         <label htmlFor="passwordBox"></label>
-        <Input style={{marginTop: "3vh", marginBottom: "3vh"}}
+        <Input
+          style={{ marginTop: "3vh", marginBottom: "3vh" }}
           color="secondary"
           startAdornment={
             <InputAdornment position="start">
@@ -138,7 +131,6 @@ const LoginForm = () => {
           <p> {validationErrors.password}</p>
         ) : null}
 
-        {/* <pre>{JSON.stringify(postRequestData, null, 5)}</pre> */}
         <Button
           variant="contained"
           color="primary"
@@ -147,18 +139,18 @@ const LoginForm = () => {
         >
           Submit
         </Button>
-            <p>Not registered yet?</p>
-       <NavLink style={{textDecoration: "none"}} to="/register"> <Button
-          variant="contained"
-          color="primary"
-          type="submit"
-        >
-          Register
-        </Button>
-        </NavLink> 
+        <p>Not registered yet?</p>
+        <NavLink style={{ textDecoration: "none" }} to="/register">
+          {" "}
+          <Button variant="contained" color="primary" type="submit">
+            Register
+          </Button>
+        </NavLink>
       </StyledForm>
     </div>
   );
 };
-
-export default LoginForm;
+const actions = {
+  loginUser,
+};
+export default connect(null, actions)(LoginForm);

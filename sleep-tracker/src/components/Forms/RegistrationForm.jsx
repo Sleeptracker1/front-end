@@ -10,6 +10,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import { connect } from "react-redux";
 import { registerUser } from "../../redux/actions/authActions";
+
 const StyledForm = styled.form`
   display: flex;
   justify-content: center;
@@ -41,8 +42,6 @@ const RegistrationForm = ({ registerUser }) => {
     username: "",
     password: "",
   });
-
-  //const [postRequestData, setPostRequestData] = useState([]);
 
   useEffect(() => {
     formSchema.isValid(formState).then((valid) => {
@@ -103,7 +102,7 @@ const RegistrationForm = ({ registerUser }) => {
           name="username"
           id="userNameBox"
           placeholder="Desired User Name"
-          value={formState.name}
+          value={formState.username}
           onChange={inputChange}
         />
         {validationErrors.username.length > 0 ? (
@@ -130,7 +129,6 @@ const RegistrationForm = ({ registerUser }) => {
           <p> {validationErrors.password}</p>
         ) : null}
 
-        {/* <pre>{JSON.stringify(postRequestData, null, 5)}</pre> */}
         <Button
           variant="contained"
           color="primary"
