@@ -4,34 +4,38 @@ import { Distribution, Grommet, Box, Button } from "grommet";
 import { useParams, useHistory } from "react-router-dom";
 import ClockLoader from "react-spinners/ClockLoader";
 import { axiosWithAuth } from "./utils/axiosWithAuth";
-
-export default function SleepList(props) {
+import moment from "moment";
+export default function SleepList() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  useEffect((user_id) => {
+
+  useEffect(() => {
     setIsLoading(true);
     axiosWithAuth()
-      .get(`https://bw-ft-sleep-tracker-1.herokuapp.com/api/sleep/`)
+      .get(`api/sleep/`)
       .then((res) => {
         console.log("res in sleep list,", res);
         setData(res.data);
         setIsLoading(false);
       });
   }, []);
+
+  const { push } = useHistory();
+
   const Delete = (id) => {
     axiosWithAuth()
-      .delete(`https://bw-ft-sleep-tracker-1.herokuapp.com/api/sleep/${id}`)
+      .delete(`api/sleep/${id}`)
       .then((res) => {
-        props.history.push("/sleep-routine");
-        setData(res.data);
+        push("/sleep-routine");
+        // setData(res.data);
         setIsLoading(false);
       });
+    console.log("id", id);
   };
-  const { push } = useHistory();
-  const { id } = useParams();
-  // const Edit = (props) => {
-  //   push("/add-sleep-routine");
-  // };
+  console.log("data in sleeplist", data);
+  const Edit = (props) => {
+    push("/add-sleep-routine");
+  };
   return (
     <Grommet>
       <Box
@@ -41,27 +45,33 @@ export default function SleepList(props) {
         background="dark-2"
       >
         {isLoading ? <ClockLoader /> : null}
-        <Box direction="row">
+        <Box direction="column">
           {data.map((d) => (
-            <>
-              <Box>
-                <h2>{d.score}</h2>
+            <div key={d.sleep_record_id}>
+              <Box background="dark-1" direction="row">
+                <Box>
+                  <h2> {moment(d.score).format("MMMM Do YYYY")} </h2>
+                </Box>
+                <Box>
+                  <h2>
+                    {" "}
+                    hours slept:{" "}
+                    {moment(d.end_time).hours() - moment(d.start_time).hours()}
+                  </h2>
+                </Box>
+                <Button
+                  id={d.sleep_record_id}
+                  label="delete"
+                  onClick={() => Delete(d.sleep_record_id)}
+                >
+                  X
+                </Button>
+                {console.log("d", d)}
+                <Button label="edit" onClick={() => Edit(data.user_id)}>
+                  EDIT
+                </Button>
               </Box>
-              <Box>
-                <h2>{d.start_time}</h2>
-              </Box>
-
-              <Box>
-                <h2>{d.end_time}</h2>
-              </Box>
-
-              <Button label="delete" onClick={Delete(data.user_id)}>
-                X
-              </Button>
-              {/* <Button label="edit" onClick={Edit(data.user_id)}>
-                EDIT
-              </Button> */}
-            </>
+            </div>
           ))}
         </Box>
       </Box>

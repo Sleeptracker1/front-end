@@ -15,20 +15,7 @@ function App() {
       <Grommet plain>
         <ThemeProvider theme={lightTheme}>
           <DashStyles />
-          <ul>
-            <li>
-              <PrivateRoute to={"/user-dashboard"}>User Dashboard</PrivateRoute>
-            </li>
-
-            <li>
-              <PrivateRoute to={"/sleep-routine"}>Sleep Routine</PrivateRoute>
-            </li>
-            <li>
-              <PrivateRoute to={"/add-sleep-routine"}>
-                Add Sleep Routine
-              </PrivateRoute>
-            </li>
-          </ul>
+          <Links />
 
           <Switch>
             <Route exact path="/user-dashboard" component={DashContainer} />
