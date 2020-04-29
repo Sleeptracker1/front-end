@@ -148,7 +148,7 @@ const LoginForm = () => {
           Submit
         </Button>
             <p>Not registered yet?</p>
-       <NavLink style={{textDecoration: "none"}} to="/registration"> <Button
+       <NavLink style={{textDecoration: "none"}} to="/register"> <Button
           variant="contained"
           color="primary"
           type="submit"

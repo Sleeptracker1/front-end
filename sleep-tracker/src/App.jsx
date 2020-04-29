@@ -9,6 +9,8 @@ import SleepDisplay from "./components/dashboard/dashContent/SleepDisplay";
 import AddEditSleepForm from "./components/dashboard/dashContent/AddEditSleepForm";
 import Links from "./components/dashboard/dashSidebar/Links";
 import PrivateRoute from "./components/PrivateRoute";
+import LoginForm from "./components/Forms/LoginForm";
+import RegistrationForm from "./components/Forms/RegistrationForm";
 function App() {
   return (
     <div className="App">
@@ -29,7 +31,8 @@ function App() {
               </PrivateRoute>
             </li>
           </ul>
-
+          <Route exact path="/login" component={LoginForm} />
+          <Route exact path="/register" component={RegistrationForm} />
           <Switch>
             <Route exact path="/user-dashboard" component={DashContainer} />
             <Route exact path="/sleep-routine" component={SleepDisplay} />
@@ -47,5 +50,7 @@ function App() {
 
 export default App;
 
-{/* < Route exact path="/" component={LoginForm} />
-< Route exact path="/registration" component={RegistrationForm} />  */}
+{
+  /* < Route exact path="/" component={LoginForm} />
+< Route exact path="/registration" component={RegistrationForm} />  */
+}

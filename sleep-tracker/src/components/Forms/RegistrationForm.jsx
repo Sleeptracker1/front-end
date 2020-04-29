@@ -3,12 +3,13 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import * as yup from "yup";
 import Button from "@material-ui/core/Button";
-import axios from "axios";
+
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
-
+import { connect } from "react-redux";
+import { registerUser } from "../../redux/actions/authActions";
 const StyledForm = styled.form`
   display: flex;
   justify-content: center;
@@ -17,7 +18,7 @@ const StyledForm = styled.form`
   margin-top: 50px;
 `;
 
-const RegistrationForm = () => {
+const RegistrationForm = ({ registerUser }) => {
   const formSchema = yup.object().shape({
     name: yup
       .string()
@@ -41,7 +42,6 @@ const RegistrationForm = () => {
   });
 
   //const [postRequestData, setPostRequestData] = useState([]);
-  
 
   useEffect(() => {
     formSchema.isValid(formState).then((valid) => {
@@ -81,16 +81,7 @@ const RegistrationForm = () => {
 
   const submitPostRequest = (event) => {
     event.preventDefault();
-    console.log("submitted");
-    // axios
-    //   .post("https://reqres.in/api/users", formState)
-    //   .then((response) => {
-    //     setPostRequestData([...postRequestData, response.data]);
-    //     console.log("success", response);
-    //   })
-    //   .catch((submissionError) => {
-    //     console.log(submissionError.response);
-    //   });
+    console.log(formState);
   };
 
   return (
@@ -116,7 +107,8 @@ const RegistrationForm = () => {
         ) : null}
 
         <label htmlFor="passwordBox"></label>
-        <Input style={{marginTop: "3vh", marginBottom: "3vh"}}
+        <Input
+          style={{ marginTop: "3vh", marginBottom: "3vh" }}
           color="secondary"
           startAdornment={
             <InputAdornment position="start">
@@ -148,6 +140,7 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;
-
-
+const actions = {
+  registerUser,
+};
+export default connect(null, actions)(RegistrationForm);
