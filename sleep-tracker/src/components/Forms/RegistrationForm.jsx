@@ -45,7 +45,6 @@ const RegistrationForm = ({ registerUser }) => {
 
   useEffect(() => {
     formSchema.isValid(formState).then((valid) => {
-      console.log(valid);
       setSubmitButtonDisabled(!valid);
     });
   }, [formState, formSchema]);
@@ -71,7 +70,6 @@ const RegistrationForm = ({ registerUser }) => {
         });
       })
       .catch((error) => {
-        console.log(error);
         setValidationErrors({
           ...validationErrors,
           [event.target.name]: error.message,
@@ -81,7 +79,7 @@ const RegistrationForm = ({ registerUser }) => {
 
   const submitPostRequest = (event) => {
     event.preventDefault();
-    console.log(formState);
+
     registerUser(formState, () => {
       push("/login");
     });
