@@ -53,3 +53,6 @@ function App() {
 }
 
 export default App;
+
+{/* < Route exact path="/" component={LoginForm} />
+< Route exact path="/registration" component={RegistrationForm} />  */}
