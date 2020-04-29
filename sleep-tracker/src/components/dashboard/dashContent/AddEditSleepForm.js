@@ -3,7 +3,9 @@ import { connect } from "react-redux";
 import { Box, Form, Grommet } from "grommet";
 import moment from "moment";
 
-const AddEditSleepForm = () => {
+import { createLog } from "../../../redux/actions/sleepLogActions";
+
+const AddEditSleepForm = ({ createLog }) => {
   const [formInputs, setFormInputs] = useState({
     startDate: "",
     startTime: "",
@@ -25,10 +27,15 @@ const AddEditSleepForm = () => {
     e.preventDefault();
     const { start, end } = evalutateTime();
     const postValues = {
-      starTime: start._i,
-      endTime: end._i,
-      rating: Number(formInputs.rating),
+      start_time: start._i,
+      end_time: end._i,
+      score: Number(formInputs.rating),
+      users_id: 7,
+      notes: "another test",
     };
+    let json = JSON.stringify(postValues);
+    console.log(json);
+    createLog(postValues);
   };
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -87,5 +94,7 @@ const AddEditSleepForm = () => {
     </Grommet>
   );
 };
-
-export default connect(null, null)(AddEditSleepForm);
+const actions = {
+  createLog,
+};
+export default connect(null, actions)(AddEditSleepForm);
