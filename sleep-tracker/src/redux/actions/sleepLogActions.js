@@ -8,24 +8,22 @@ import {
   ERR_LOG,
 } from "../types/sleepLogTypes";
 
-const axiosWithAuth = () => {
+export const axiosWithAuth = () => {
   const token = localStorage.getItem("token");
   return axios.create({
     headers: {
       "Content-Type": "application/json",
-      Authorization:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo3LCJpYXQiOjE1ODgxMTg2NDMsImV4cCI6MTU4ODcyMzQ0M30.QOQFb5ktw8clFvL21TVdeu6pWvai4YTlgiSp2kjhF3o",
+      Authorization: `${token}`,
     },
-    baseURL: "https://bw-ft-sleep-tracker-1.herokuapp.com",
+    baseURL: "https://bw-ft-sleep-tracker-1.herokuapp.com/",
   });
 };
 
 export const getLogs = () => async (dispatch) => {
   dispatch({ type: LOADING_LOGS });
-  let userId = JSON.parse(localStorage.getItem(userId));
   try {
-    const sleepLog = await axiosWithAuth().get(`/api/sleep/${userId}`);
-    dispatch({ type: FETCH_LOGS, payload: sleepLog });
+    const sleepLog = await axiosWithAuth().get(`/api/sleep/`);
+    dispatch({ type: FETCH_LOGS, payload: sleepLog.data });
   } catch (err) {
     dispatch({ type: ERR_LOG, payload: err.message });
   }
@@ -42,6 +40,8 @@ export const createLog = (logInputs) => async (dispatch) => {
 
 export const deleteLog = (logId) => async (dispatch) => {
   try {
+    const response = await axiosWithAuth().delete(`api/sleep/${logId}`);
+    console.log(response);
     dispatch({ type: DELETE_LOG, payload: logId });
   } catch (err) {
     dispatch({ type: ERR_LOG, payload: err.message });
