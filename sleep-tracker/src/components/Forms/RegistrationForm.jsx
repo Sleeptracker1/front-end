@@ -3,11 +3,13 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import * as yup from "yup";
 import Button from "@material-ui/core/Button";
-import axios from "axios";
+import { useHistory } from "react-router-dom";
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
+import { connect } from "react-redux";
+import { registerUser } from "../../redux/actions/authActions";
 
 const StyledForm = styled.form`
   display: flex;
@@ -17,9 +19,10 @@ const StyledForm = styled.form`
   margin-top: 50px;
 `;
 
-const RegistrationForm = () => {
+const RegistrationForm = ({ registerUser }) => {
+  const { push } = useHistory();
   const formSchema = yup.object().shape({
-    name: yup
+    username: yup
       .string()
       .required("User Name is a required field.")
       .min(2, "minimum four characters")
@@ -29,19 +32,16 @@ const RegistrationForm = () => {
   });
 
   const [formState, setFormState] = useState({
-    name: "",
+    username: "",
     password: "",
   });
 
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
 
   const [validationErrors, setValidationErrors] = useState({
-    name: "",
+    username: "",
     password: "",
   });
-
-  //const [postRequestData, setPostRequestData] = useState([]);
-  
 
   useEffect(() => {
     formSchema.isValid(formState).then((valid) => {
@@ -81,16 +81,10 @@ const RegistrationForm = () => {
 
   const submitPostRequest = (event) => {
     event.preventDefault();
-    console.log("submitted");
-    // axios
-    //   .post("https://reqres.in/api/users", formState)
-    //   .then((response) => {
-    //     setPostRequestData([...postRequestData, response.data]);
-    //     console.log("success", response);
-    //   })
-    //   .catch((submissionError) => {
-    //     console.log(submissionError.response);
-    //   });
+    console.log(formState);
+    registerUser(formState, () => {
+      push("/login");
+    });
   };
 
   return (
@@ -105,18 +99,19 @@ const RegistrationForm = () => {
             </InputAdornment>
           }
           type="text"
-          name="name"
+          name="username"
           id="userNameBox"
           placeholder="Desired User Name"
-          value={formState.name}
+          value={formState.username}
           onChange={inputChange}
         />
-        {validationErrors.name.length > 0 ? (
+        {validationErrors.username.length > 0 ? (
           <p> {validationErrors.name}</p>
         ) : null}
 
         <label htmlFor="passwordBox"></label>
-        <Input style={{marginTop: "3vh", marginBottom: "3vh"}}
+        <Input
+          style={{ marginTop: "3vh", marginBottom: "3vh" }}
           color="secondary"
           startAdornment={
             <InputAdornment position="start">
@@ -134,7 +129,6 @@ const RegistrationForm = () => {
           <p> {validationErrors.password}</p>
         ) : null}
 
-        {/* <pre>{JSON.stringify(postRequestData, null, 5)}</pre> */}
         <Button
           variant="contained"
           color="primary"
@@ -148,6 +142,7 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;
-
-
+const actions = {
+  registerUser,
+};
+export default connect(null, actions)(RegistrationForm);
