@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import SleepGraph from "./SleepGraph";
 import { Distribution, Grommet, Box, Button } from "grommet";
 import ClockLoader from "react-spinners/ClockLoader";
+
 export default function SleepList(props) {
   const [data, setData] = useState({ sleepData: [], mode: "view" });
   const [isLoading, setIsLoading] = useState(false);

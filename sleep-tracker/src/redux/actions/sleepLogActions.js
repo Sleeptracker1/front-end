@@ -13,7 +13,8 @@ const axiosWithAuth = () => {
   return axios.create({
     headers: {
       "Content-Type": "application/json",
-      Authorization: `${token}`,
+      Authorization:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo3LCJpYXQiOjE1ODgxMTg2NDMsImV4cCI6MTU4ODcyMzQ0M30.QOQFb5ktw8clFvL21TVdeu6pWvai4YTlgiSp2kjhF3o",
     },
     baseURL: "https://bw-ft-sleep-tracker-1.herokuapp.com",
   });
@@ -34,7 +35,7 @@ export const getLogs = () => async (dispatch) => {
 export const createLog = (logInputs) => async (dispatch) => {
   try {
     const newLog = await axiosWithAuth().post(`/api/sleep`, logInputs);
-    dispatch({ type: POST_LOG, payload: newLog });
+    dispatch({ type: POST_LOG, payload: newLog.data });
   } catch (err) {
     dispatch({ type: ERR_LOG, payload: err.message });
   }

@@ -27,7 +27,7 @@ export const registerUser = (credentials) => async (dispatch) => {
 };
 export const loginUser = (credentials) => async (dispatch) => {
   try {
-    const user = await axiosWithAuth().post("/api/users/register", credentials);
+    const user = await axiosWithAuth().post("/api/users/login", credentials);
     dispatch({ type: LOGIN_USER, payload: user });
   } catch (err) {
     dispatch({ type: AUTH_ERROR, payload: err.message });
