@@ -1,20 +1,18 @@
 import React from "react";
-import { Container } from "./dashSideMenu/menuItem.styled";
-import { Link } from "react-router-dom";
+import { Container, StyledLink,LinkContainer } from "./dashSideMenu/menuItem.styled";
 
 export default function Links() {
   return (
-    <ul>
+    <LinkContainer>
       <Container>
-        <Link to={"/user-dashboard"}>User Dashboard</Link>
-      </Container>
-
-      <Container>
-        <Link to={"/sleep-routine"}>Sleep Routine</Link>
+        <StyledLink to={"/user-dashboard"}>Dashboard</StyledLink>
       </Container>
       <Container>
-        <Link to={"/add-sleep-routine"}>Add Sleep Routine</Link>
+        <StyledLink to={"/sleep-routine"}>Sleep Routine</StyledLink>
       </Container>
-    </ul>
+      <Container>
+        <StyledLink to={"/add-sleep-routine"}>Add Sleep Entry</StyledLink>
+      </Container>
+    </LinkContainer>
   );
 }
