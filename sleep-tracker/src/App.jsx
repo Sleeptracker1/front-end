@@ -34,13 +34,19 @@ function App({ loggedIn }) {
         <Route exact path="/login" component={LoginForm} />
         <Route exact path="/register" component={RegistrationForm} />
         <Switch>
-          <PrivateRoute
+          <Route
             exact
             path="/user-dashboard"
             component={DashContainer}
           />
           <Route exact path="/sleep-routine" component={SleepDisplay} />
-          <Route exact path="/add-sleep-routine" component={AddEditSleepForm} />
+
+          <Route
+            exact
+            path="/add-sleep-routine"
+            component={AddEditSleepForm}
+          />
+
         </Switch>
       </ThemeProvider>
     </div>

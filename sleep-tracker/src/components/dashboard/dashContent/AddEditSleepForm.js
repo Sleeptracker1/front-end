@@ -1,25 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { Box, Form, Grommet } from "grommet";
 import moment from "moment";
 
-import { createLog } from "../../../redux/actions/sleepLogActions";
+import {
+  createLog,
+  completeEditLog,
+} from "../../../redux/actions/sleepLogActions";
 
-const AddEditSleepForm = ({ createLog, userId }) => {
+const AddEditSleepForm = ({
+  createLog,
+  userId,
+  editing,
+  logToEdit,
+  completeEditLog,
+}) => {
+  const { push } = useHistory();
   const [formInputs, setFormInputs] = useState({
     startDate: "",
     startTime: "",
     endDate: "",
     endTime: "",
-    rating: 0,
+    rating: "",
     notes: "",
   });
-  const [loading, setLoading] = useState(false);
+  // const [edit, setEdit] = useState(false);
+
+  useEffect(() => {
+    // console.log('first', edit);
+    // setEdit();
+    if (editing) {
+      setFormInputs({
+        ...formInputs,
+        startDate: moment(logToEdit.start_time).format("YYYY-MM-DD"),
+        startTime: moment(logToEdit.start_time).format("hh:mm"),
+        endDate: moment(logToEdit.end_time).format("YYYY-MM-DD"),
+        endTime: moment(logToEdit.end_time).format("hh:mm"),
+        rating: logToEdit.score,
+        notes: logToEdit.notes,
+      });
+    }
+  }, [editing]);
 
   const evalutateTime = () => {
     const start = moment(`${formInputs.startDate}T${formInputs.startTime}`);
     const end = moment(`${formInputs.endDate}T${formInputs.endTime}`);
-    const diff = end.diff(start);
     return { start, end };
   };
   const AddDateTime = (e) => {
@@ -32,11 +58,24 @@ const AddEditSleepForm = ({ createLog, userId }) => {
       users_id: userId,
       notes: formInputs.notes,
     };
-    createLog(postValues);
+    if (editing) {
+      const logId = { sleep_record_id: logToEdit.sleep_record_id };
+      const editedValues = {
+        ...postValues,
+        created_at: logToEdit.created_at,
+        updated_at: logToEdit.updated_at,
+      };
+      completeEditLog(editedValues, logId, () => {
+        push("/user-dashboard");
+      });
+    } else {
+      createLog(postValues, () => {
+        push("/user-dashboard");
+      });
+    }
   };
   const onChange = (e) => {
     const { name, value } = e.target;
-
     setFormInputs({
       ...formInputs,
       [name]: value,
@@ -58,7 +97,12 @@ const AddEditSleepForm = ({ createLog, userId }) => {
         <Form onSubmit={AddDateTime}>
           <label>
             Start
-            <input type="date" name="startDate" onChange={onChange} />
+            <input
+              type="date"
+              name="startDate"
+              onChange={onChange}
+              value={formInputs.startDate}
+            />
             <input
               type="time"
               name="startTime"
@@ -70,7 +114,12 @@ const AddEditSleepForm = ({ createLog, userId }) => {
           <br />
           <label>
             end
-            <input type="date" name="endDate" onChange={onChange} />
+            <input
+              type="date"
+              name="endDate"
+              onChange={onChange}
+              value={formInputs.endDate}
+            />
             <input
               type="time"
               name="endTime"
@@ -99,8 +148,11 @@ const AddEditSleepForm = ({ createLog, userId }) => {
 };
 const actions = {
   createLog,
+  completeEditLog,
 };
 const mapState = (state) => ({
   userId: state.auth.currentUser.userId,
+  editing: state.sleepLog.editing,
+  logToEdit: state.sleepLog.logToEdit,
 });
 export default connect(mapState, actions)(AddEditSleepForm);
