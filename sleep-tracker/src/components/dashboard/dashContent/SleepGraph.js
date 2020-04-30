@@ -55,10 +55,15 @@ export default function SleepGraph(props) {
         background="light-2"
       >
         <AreaChart
-          width={1200}
-          height={600}
+          width={800}
+          height={400}
           data={graphData}
-          margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+          margin={{
+            top: 10,
+            right: 35,
+            left: 0,
+            bottom: 0,
+          }}
         >
           <Area
             type="monotone"
@@ -66,7 +71,7 @@ export default function SleepGraph(props) {
             stroke="navy"
             fill="blue"
           />
-          <CartesianGrid stroke="white" strokeDasharray="2 2" />
+          <CartesianGrid stroke="darkgrey" strokeDasharray="2 2" />
           <XAxis dataKey="start_date" interval={2} />
 
           <YAxis dataKey="time_slept" />
