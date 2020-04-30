@@ -21,7 +21,9 @@ export const getLogs = () => async (dispatch) => {
 
 export const createLog = (logInputs, redirect) => async (dispatch) => {
   try {
+    console.log(logInputs);
     const newLog = await axiosWithAuth().post(`/api/sleep`, logInputs);
+    console.log(newLog);
     dispatch({ type: POST_LOG, payload: newLog.data });
     redirect();
   } catch (err) {

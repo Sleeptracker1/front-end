@@ -9,7 +9,7 @@ import {
   completeEditLog,
 } from "../../../redux/actions/sleepLogActions";
 
-const AddEditSleepForm = ({
+const SleepEntryForm = ({
   createLog,
   userId,
   editing,
@@ -25,11 +25,8 @@ const AddEditSleepForm = ({
     rating: "",
     notes: "",
   });
-  // const [edit, setEdit] = useState(false);
 
   useEffect(() => {
-    // console.log('first', edit);
-    // setEdit();
     if (editing) {
       setFormInputs({
         ...formInputs,
@@ -54,7 +51,7 @@ const AddEditSleepForm = ({
     const postValues = {
       start_time: start._i,
       end_time: end._i,
-      score: parseInt(formInputs.rating),
+      score: formInputs.rating,
       users_id: userId,
       notes: formInputs.notes,
     };
@@ -69,6 +66,7 @@ const AddEditSleepForm = ({
         push("/user-dashboard");
       });
     } else {
+      console.log(postValues);
       createLog(postValues, () => {
         push("/user-dashboard");
       });
@@ -151,8 +149,8 @@ const actions = {
   completeEditLog,
 };
 const mapState = (state) => ({
-  userId: state.auth.currentUser.userId,
+  userId: state.auth.currentUser.users_id,
   editing: state.sleepLog.editing,
   logToEdit: state.sleepLog.logToEdit,
 });
-export default connect(mapState, actions)(AddEditSleepForm);
+export default connect(mapState, actions)(SleepEntryForm);
