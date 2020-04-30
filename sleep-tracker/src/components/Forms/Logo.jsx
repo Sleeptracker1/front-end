@@ -11,7 +11,7 @@ const LogoBackground = styled.div`
 
 const StyledLogo = styled.h1`
 font-weight: bolder;
-font-size: 8rem;
+font-size: 10rem;
 background: -webkit-linear-gradient(bottom, #263D42, #2A9D8F, #FF5A1E, #263D42 );
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
