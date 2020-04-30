@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { Box, Form, Grommet } from "grommet";
 import moment from "moment";
-
+import "../../../sass/SleepEntryForm.scss";
 import {
   createLog,
   completeEditLog,
@@ -82,64 +82,77 @@ const SleepEntryForm = ({
 
   return (
     <Grommet>
-      <Box
-        direction="column"
-        pad="medium"
-        animation="fadeIn"
-        background="neutral-1"
-        justify="center"
-        height="medium"
-        width="large"
-        align="center"
-      >
-        <Form onSubmit={AddDateTime}>
-          <label>
-            Start
-            <input
-              type="date"
-              name="startDate"
-              onChange={onChange}
-              value={formInputs.startDate}
-            />
-            <input
-              type="time"
-              name="startTime"
-              value={formInputs.startTime}
-              onChange={onChange}
-            />
-          </label>
+      <Box width="100vw" height="100vh" background="#C6EBBE">
+        <Box
+          direction="column"
+          pad="medium"
+          animation="fadeIn"
+          className="smart-green"
+          id="Box"
+          background="#3626A7"
+          justify="center"
+          height="large"
+          width="large"
+          align="center"
+        >
+          <Form className="smart-green" onSubmit={AddDateTime}>
+            <label>
+              Start Date and Time:
+              <input
+                type="date"
+                name="startDate"
+                onChange={onChange}
+                value={formInputs.startDate}
+              />
+              <input
+                type="time"
+                name="startTime"
+                value={formInputs.startTime}
+                onChange={onChange}
+              />
+            </label>
 
-          <br />
-          <label>
-            end
+            <br />
+            <label>
+              End Date and Time:
+              <input
+                type="date"
+                name="endDate"
+                onChange={onChange}
+                value={formInputs.endDate}
+              />
+              <input
+                type="time"
+                name="endTime"
+                value={formInputs.endTime}
+                onChange={onChange}
+              />
+            </label>
+            <br />
+            <label>
+              How good was your sleep?
+              <select onChange={onChange} name="rating">
+                <option id="4">4 😀</option>
+                <option id="3">3 🙂</option>
+                <option id="2">2 😑</option>
+                <option id="1">1 😭</option>
+              </select>
+            </label>
+            <br />
+
             <input
-              type="date"
-              name="endDate"
+              type="textarea"
+              name="notes"
+              value={formInputs.notes}
               onChange={onChange}
-              value={formInputs.endDate}
+              placeholder="notes"
             />
-            <input
-              type="time"
-              name="endTime"
-              value={formInputs.endTime}
-              onChange={onChange}
-            />
-          </label>
-          <br />
-          <select onChange={onChange} name="rating">
-            <option id="4">4</option>
-            <option id="3">3</option>
-            <option id="2">2</option>
-            <option id="1">1</option>
-          </select>
-          <input
-            type="textarea"
-            name="notes"
-            value={formInputs.notes}
-            onChange={onChange}
-          />
-          <input type="submit" value="submit" />
-        </Form>
+
+            <br />
+
+            <input type="submit" value="submit" className="button" />
+          </Form>
+        </Box>
       </Box>
     </Grommet>
   );
