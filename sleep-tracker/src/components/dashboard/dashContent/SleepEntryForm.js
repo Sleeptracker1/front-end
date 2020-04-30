@@ -22,7 +22,7 @@ const SleepEntryForm = ({
     startTime: "",
     endDate: "",
     endTime: "",
-    rating: "",
+    rating: "4",
     notes: "",
   });
 
@@ -49,6 +49,7 @@ const SleepEntryForm = ({
     e.preventDefault();
     const { start, end } = evalutateTime();
     const formatRating = formInputs.rating.split(' ');
+    console.log(formatRating);
     const postValues = {
       start_time: start._i,
       end_time: end._i,
