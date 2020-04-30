@@ -1,19 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;400&display=swap");
 .content-container {
-  margin-left: 15%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   .list-container {
     margin: 0 auto;
     display: flex;
-    flex-direction: column;
-
-    width: 45%;
+    flex-wrap: wrap;
+    width: 70%;
     .sleep-entry {
       font-family: "Nunito Sans", sans-serif;
       border: 0.1rem solid $main-purple;
       border-radius: 1rem;
-      width: 100%;
+      width: 46%;
       padding: 2%;
-      margin: 1% 0;
+      margin: 1% 2%;
       display: flex;
       justify-content: space-between;
       align-items: center;
