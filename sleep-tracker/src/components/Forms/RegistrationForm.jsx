@@ -86,11 +86,11 @@ const RegistrationForm = ({ registerUser }) => {
      <Logo/>
       <StyledForm onSubmit={submitPostRequest}>
         <label htmlFor="userNameBox"></label>
-        <Input
+        <Input style={{ fontSize: '2rem'}}
           color="secondary"
           startAdornment={
             <InputAdornment position="start">
-              <AccountCircle />
+              <AccountCircle fontSize="large" />
             </InputAdornment>
           }
           type="text"
@@ -106,11 +106,11 @@ const RegistrationForm = ({ registerUser }) => {
 
         <label htmlFor="passwordBox"></label>
         <Input
-          style={{ marginTop: "3vh", marginBottom: "3vh" }}
+          style={{ fontSize: '2rem', marginTop: "3vh", marginBottom: "2vh" }}
           color="secondary"
           startAdornment={
             <InputAdornment position="start">
-              <LockOpenIcon />
+              <LockOpenIcon fontSize="large" />
             </InputAdornment>
           }
           type="password"
@@ -124,7 +124,7 @@ const RegistrationForm = ({ registerUser }) => {
           <StyledError> {validationErrors.password}</StyledError>
         ) : null}
 
-        <Button style={{margin: '1vh'}}
+        <Button style={{margin: '1vh', fontSize: '1.5rem'}}
           variant="contained"
           color="primary"
           type="submit"
@@ -133,9 +133,9 @@ const RegistrationForm = ({ registerUser }) => {
           Submit
         </Button>
         <p style={{fontFamily: 'Manrope, sans-serif',
-fontSize: '1rem', margin: '1vh'}}>
+fontSize: '1.5rem', margin: '1vh'}}>
   <SplitText initialPose="exit" pose="enter" charPoses={split}>Already a Member?</SplitText></p>
-       <NavLink style={{textDecoration: "none"}} to="/"> <Button style={{margin: '1vh'}}
+       <NavLink style={{textDecoration: "none"}} to="/"> <Button style={{margin: '1vh', fontSize: '1.5rem'}}
           variant="contained"
           color="primary"
           type="submit"

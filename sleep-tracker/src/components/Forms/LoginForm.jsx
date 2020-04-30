@@ -14,6 +14,7 @@ import { loginUser } from "../../redux/actions/authActions";
 import SplitText from 'react-pose-text';
 import Logo from './Logo'
 
+//document.body.style = 'background: ';
 
 export const StyledForm = styled.form`
   display: flex;
@@ -24,7 +25,7 @@ export const StyledForm = styled.form`
 
   export const StyledError = styled.p`
   font-family: 'Manrope', sans-serif;
-  font-size: 1rem;
+  font-size: 1.5rem;
   color: red;`
 
   export const split = {
@@ -108,11 +109,11 @@ export const StyledForm = styled.form`
       <Logo />
       <StyledForm onSubmit={submitPostRequest}>
         <label htmlFor="userNameBox"></label>
-        <Input
+        <Input  style={{ fontSize: '2rem'}} 
           color="secondary"
           startAdornment={
             <InputAdornment position="start">
-              <AccountCircle />
+              <AccountCircle fontSize="large" />
             </InputAdornment>
           }
           type="text"
@@ -128,11 +129,11 @@ export const StyledForm = styled.form`
 
         <label htmlFor="passwordBox"></label>
         <Input
-          style={{ marginTop: "3vh", marginBottom: "3vh" }}
+          style={{ fontSize: "2rem", marginTop: "3vh", marginBottom: "2vh"}}
           color="secondary"
           startAdornment={
-            <InputAdornment position="start">
-              <LockOpenIcon />
+            <InputAdornment  position="start">
+              <LockOpenIcon fontSize="large" />
             </InputAdornment>
           }
           type="password"
@@ -146,7 +147,7 @@ export const StyledForm = styled.form`
           <StyledError> {validationErrors.password}</StyledError>
         ) : null}
 
-        <Button style={{margin: '1vh'}}
+        <Button style={{margin: '1vh', fontSize: '1.5rem'}}
           variant="contained"
           color="primary"
           type="submit"
@@ -154,9 +155,9 @@ export const StyledForm = styled.form`
         >
           Submit
         </Button>
-        <p style={{fontFamily: 'Manrope, sans-serif', fontSize: '1rem', margin: '1vh'}}>      <SplitText initialPose="exit" pose="enter" charPoses={split}>
+        <p style={{fontFamily: 'Manrope, sans-serif', fontSize: '1.5rem', margin: '1vh'}}>      <SplitText initialPose="exit" pose="enter" charPoses={split}>
 Not registered yet? </SplitText> </p> 
-      <NavLink style={{textDecoration: "none"}} to="/register">{" "} <Button style={{margin: '1vh'}}
+      <NavLink style={{textDecoration: "none"}} to="/register">{" "} <Button style={{margin: '1vh', fontSize: '1.5rem'}}
          variant="contained"
          color="primary"
          type="submit"
