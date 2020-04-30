@@ -48,7 +48,7 @@ const SleepEntryForm = ({
   const AddDateTime = (e) => {
     e.preventDefault();
     const { start, end } = evalutateTime();
-    const formatRating = formInputs.rating.split(' ');
+    const formatRating = formInputs.rating.split(" ");
     const postValues = {
       start_time: start._i,
       end_time: end._i,
