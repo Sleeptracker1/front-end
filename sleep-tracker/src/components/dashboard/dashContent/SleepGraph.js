@@ -23,7 +23,7 @@ import {
 import { axiosWithAuth } from "../../../utils/axiosWithAuth";
 import moment from "moment";
 
-const SleepGraph = (props) => {
+const SleepGraph = ({logData}) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [show, setShow] = React.useState();
@@ -35,7 +35,7 @@ const SleepGraph = (props) => {
         setData(res.data);
       });
     setIsLoading(false);
-  }, []);
+  }, [logData]);
 
   const graphData = data.map((result) => {
     const diff2 = moment(result.end_time).diff(moment(result.start_time));
@@ -140,6 +140,6 @@ const SleepGraph = (props) => {
   );
 };
 const mapState = state => ({
-  
+  logData: state.sleepLog.sleepLog
 })
 export default connect(mapState, null)(SleepGraph);
