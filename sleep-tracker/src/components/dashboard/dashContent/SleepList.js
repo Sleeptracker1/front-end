@@ -48,8 +48,8 @@ const SleepList = ({ deleteLog, sleepData, startEditLog }) => {
               <i className="fas fa-edit" onClick={() => handleEdit(d)}></i>
             </div>
           </div>
-        ))}
-      </div>
+        );
+      })}
     </div>
   );
 };
