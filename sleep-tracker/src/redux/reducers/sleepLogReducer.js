@@ -23,6 +23,8 @@ const fetchLogs = (state = initialState, payload) => {
       ...state,
       sleepLog: payload,
       isLoading: false,
+      editing: false,
+      logToEdit: {},
     };
   }
 };
@@ -59,6 +61,7 @@ const startUpdate = (state = initialState, payload) => {
 
 const completeUpdateLog = (state = initialState, payload) => {
   if (payload) {
+    console.log("hello from reducer");
     return {
       ...state,
       editing: false,

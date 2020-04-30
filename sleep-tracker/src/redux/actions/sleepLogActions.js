@@ -65,7 +65,11 @@ export const completeEditLog = (editedLog, logId, redirect) => async (dispatch) 
       `api/sleep/${logId.sleep_record_id}`,
       editedLog
     );
-    dispatch({ type: UPDATE_LOG, payload: editedLog });
+    const newEdited = {
+      ...editedLog,
+      sleep_record_id: logId.sleep_record_id
+    }
+    dispatch({ type: UPDATE_LOG, payload: newEdited });
     redirect();
   } catch (err) {
     dispatch({ type: ERR_LOG, payload: err.message });
