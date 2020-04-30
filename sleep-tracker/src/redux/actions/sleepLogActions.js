@@ -25,18 +25,16 @@ export const getLogs = () => async (dispatch) => {
   try {
     const sleepLog = await axiosWithAuth().get(`/api/sleep/`);
     dispatch({ type: FETCH_LOGS, payload: sleepLog.data });
-    console.log("response from get request", sleepLog.data);
   } catch (err) {
     dispatch({ type: ERR_LOG, payload: err.message });
   }
 };
 
-export const createLog = (logInputs) => async (dispatch) => {
+export const createLog = (logInputs, redirect) => async (dispatch) => {
   try {
     const newLog = await axiosWithAuth().post(`/api/sleep`, logInputs);
-    console.log("post request", newLog.data);
     dispatch({ type: POST_LOG, payload: newLog.data });
-
+    redirect();
   } catch (err) {
     dispatch({ type: ERR_LOG, payload: err.message });
   }
@@ -52,13 +50,24 @@ export const deleteLog = (logId) => async (dispatch) => {
   }
 };
 
-
 export const startEditLog = (logEntry, redirect) => async (dispatch) => {
   try {
-    console.log(logEntry)
     dispatch({ type: START_UPDATE, payload: logEntry });
     redirect();
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const completeEditLog = (editedLog, logId, redirect) => async (dispatch) => {
+  try {
+    const editLog = await axiosWithAuth().put(
+      `api/sleep/${logId.sleep_record_id}`,
+      editedLog
+    );
+    dispatch({ type: UPDATE_LOG, payload: editedLog });
+    redirect();
+  } catch (err) {
+    dispatch({ type: ERR_LOG, payload: err.message });
   }
 };

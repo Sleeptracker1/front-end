@@ -6,7 +6,7 @@ import {
   UPDATE_LOG,
   ERR_LOG,
   POST_LOG,
-  START_UPDATE
+  START_UPDATE,
 } from "../types/sleepLogTypes";
 
 const initialState = {
@@ -61,7 +61,17 @@ const completeUpdateLog = (state = initialState, payload) => {
   if (payload) {
     return {
       ...state,
-      //update log state here
+      editing: false,
+      logToEdit: {},
+      sleepLog: [
+        ...state.sleepLog.map((log) => {
+          if (log.sleep_record_id === payload.sleep_record_id) {
+            return payload;
+          } else {
+            return log;
+          }
+        }),
+      ],
     };
   }
 };
@@ -86,5 +96,5 @@ export default createReducer(initialState, {
   [UPDATE_LOG]: completeUpdateLog,
   [DELETE_LOG]: deleteLog,
   [POST_LOG]: createLog,
-  [START_UPDATE]: startUpdate
+  [START_UPDATE]: startUpdate,
 });
