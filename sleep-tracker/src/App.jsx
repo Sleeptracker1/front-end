@@ -7,7 +7,7 @@ import { DashStyles } from "./styled-component/dashboardContainer";
 import { lightTheme, darkTheme } from "./styled-component/theme";
 import SleepDisplay from "./components/dashboard/dashContent/SleepDisplay";
 import AddEditSleepForm from "./components/dashboard/dashContent/AddEditSleepForm";
-import PrivateRoute from "./components/PrivateRoute";
+import PrivateRoute from "./utils/PrivateRoute";
 import LoginForm from "./components/Forms/LoginForm";
 import RegistrationForm from "./components/Forms/RegistrationForm";
 

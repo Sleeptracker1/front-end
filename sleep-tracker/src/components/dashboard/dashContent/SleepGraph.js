@@ -12,10 +12,12 @@ import {
   Button,
   Layer,
 } from "grommet";
+
 import ClockLoader from "react-spinners/ClockLoader";
 import { AreaChart, Area, CartesianGrid, XAxis, YAxis } from "recharts";
-import { axiosWithAuth } from "./utils/axiosWithAuth";
+import { axiosWithAuth } from "../../../utils/axiosWithAuth";
 import moment from "moment";
+
 export default function SleepGraph(props) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

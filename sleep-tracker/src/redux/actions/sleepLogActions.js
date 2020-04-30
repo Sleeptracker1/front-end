@@ -1,4 +1,4 @@
-import axios from "axios";
+import { axiosWithAuth } from "../../utils/axiosWithAuth";
 import {
   FETCH_LOGS,
   LOADING_LOGS,
@@ -8,17 +8,6 @@ import {
   POST_LOG,
   ERR_LOG,
 } from "../types/sleepLogTypes";
-
-export const axiosWithAuth = () => {
-  const token = localStorage.getItem("token");
-  return axios.create({
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `${token}`,
-    },
-    baseURL: "https://bw-ft-sleep-tracker-1.herokuapp.com/",
-  });
-};
 
 export const getLogs = () => async (dispatch) => {
   dispatch({ type: LOADING_LOGS });
@@ -59,7 +48,9 @@ export const startEditLog = (logEntry, redirect) => async (dispatch) => {
   }
 };
 
-export const completeEditLog = (editedLog, logId, redirect) => async (dispatch) => {
+export const completeEditLog = (editedLog, logId, redirect) => async (
+  dispatch
+) => {
   try {
     const editLog = await axiosWithAuth().put(
       `api/sleep/${logId.sleep_record_id}`,
@@ -67,8 +58,8 @@ export const completeEditLog = (editedLog, logId, redirect) => async (dispatch) 
     );
     const newEdited = {
       ...editedLog,
-      sleep_record_id: logId.sleep_record_id
-    }
+      sleep_record_id: logId.sleep_record_id,
+    };
     dispatch({ type: UPDATE_LOG, payload: newEdited });
     redirect();
   } catch (err) {
