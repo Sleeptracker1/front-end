@@ -11,23 +11,39 @@ import LockOpenIcon from "@material-ui/icons/LockOpen";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../../redux/actions/authActions";
+import SplitText from 'react-pose-text';
+import Logo from './Logo'
 
-const StyledForm = styled.form`
+
+export const StyledForm = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 50px;
-`;
+  font-weight: bolder;`
 
-const LoginForm = ({ loginUser }) => {
+  export const StyledError = styled.p`
+  font-family: 'Manrope', sans-serif;
+  font-size: 1rem;
+  color: red;`
+
+  export const split = {
+    exit: { opacity: 0, y: 20 },
+    enter: {
+      opacity: 1,
+      y: 0,
+      delay: ({ charIndex }) => charIndex * 30
+    }
+  };
+
+  const LoginForm = ({ loginUser }) => {
   const { push } = useHistory();
 
   const formSchema = yup.object().shape({
     username: yup
       .string()
       .required("User Name is a required field.")
-      .min(2, "minimum four characters")
+      .min(2, "minimum two characters")
       .max(20, "max twenty characters"),
 
     password: yup.string().required().min(6, "must be at least six characters"),
@@ -89,6 +105,7 @@ const LoginForm = ({ loginUser }) => {
 
   return (
     <div>
+      <Logo />
       <StyledForm onSubmit={submitPostRequest}>
         <label htmlFor="userNameBox"></label>
         <Input
@@ -106,7 +123,7 @@ const LoginForm = ({ loginUser }) => {
           onChange={inputChange}
         />
         {validationErrors.username.length > 0 ? (
-          <p> {validationErrors.username}</p>
+          <StyledError> {validationErrors.username}</StyledError>
         ) : null}
 
         <label htmlFor="passwordBox"></label>
@@ -126,10 +143,10 @@ const LoginForm = ({ loginUser }) => {
           onChange={inputChange}
         />
         {validationErrors.password.length > 0 ? (
-          <p> {validationErrors.password}</p>
+          <StyledError> {validationErrors.password}</StyledError>
         ) : null}
 
-        <Button
+        <Button style={{margin: '1vh'}}
           variant="contained"
           color="primary"
           type="submit"
@@ -137,13 +154,16 @@ const LoginForm = ({ loginUser }) => {
         >
           Submit
         </Button>
-        <p>Not registered yet?</p>
-        <NavLink style={{ textDecoration: "none" }} to="/register">
-          {" "}
-          <Button variant="contained" color="primary" type="submit">
-            Register
-          </Button>
-        </NavLink>
+        <p style={{fontFamily: 'Manrope, sans-serif', fontSize: '1rem', margin: '1vh'}}>      <SplitText initialPose="exit" pose="enter" charPoses={split}>
+Not registered yet? </SplitText> </p> 
+      <NavLink style={{textDecoration: "none"}} to="/register">{" "} <Button style={{margin: '1vh'}}
+         variant="contained"
+         color="primary"
+         type="submit"
+       >
+         Register
+       </Button>
+       </NavLink>  
       </StyledForm>
     </div>
   );
