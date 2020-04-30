@@ -26,23 +26,28 @@ const SleepList = ({ deleteLog, sleepData, startEditLog }) => {
 
   return (
     <div>
-      <Grommet>{isLoading ? <ClockLoader /> : null}</Grommet>
+      {/* <Grommet>{isLoading ? <ClockLoader /> : null}</Grommet> */}
       <div className="list-container">
-        {sleepData.map((d) => (
-          <div key={d.sleep_record_id}>
-            <h2> {moment(d.created_at).format("dddd, MMMM Do YYYY")} </h2>
-            <h2>
-              {" "}
-              hours slept:{" "}
-              {moment(d.end_time).hours() - moment(d.start_time).hours()}
-            </h2>
-
-            <button onClick={() => deleteLog(d.sleep_record_id)}>
-              Delete X
-            </button>
-            <button onClick={() => handleEdit(d)}>EDIT</button>
-          </div>
-        ))}
+        {sleepData.map((d) => {
+          const diff = moment(d.end_time).diff(moment(d.start_time));
+          const diffDuration = moment.duration(diff);
+          const time_slept = diffDuration.hours();
+          return (
+            <div key={d.sleep_record_id} className="sleep-entry">
+              <div className="time-record">
+                <h2> {moment(d.start_time).format("ddd, MMMM Do YYYY")} </h2>
+                <h3> Hours slept: {time_slept}</h3>
+              </div>
+              <p>Notes: {d.notes} </p>
+              <div className="cta-btn">
+                <button onClick={() => deleteLog(d.sleep_record_id)}>
+                  Delete
+                </button>
+                <button onClick={() => handleEdit(d)}>EDIT</button>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
