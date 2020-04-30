@@ -5,6 +5,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin-left: 5%;
   .list-container {
     margin: 0 auto;
     display: flex;
@@ -55,7 +56,7 @@
             color: #f50057;
           }
           &.fa-edit:hover {
-            color: #00b0ff;
+            color: $main-light-blue;
           }
         }
       }
