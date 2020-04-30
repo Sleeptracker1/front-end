@@ -18,7 +18,7 @@ export default function SleepList() {
         setData(res.data);
         setIsLoading(false);
       });
-  }, []);
+  }, [data]);
 
   const { push } = useHistory();
 
@@ -27,7 +27,7 @@ export default function SleepList() {
       .delete(`api/sleep/${id}`)
       .then((res) => {
         push("/sleep-routine");
-        // setData(res.data);
+
         setIsLoading(false);
       });
     console.log("id", id);
