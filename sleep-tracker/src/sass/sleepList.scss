@@ -6,7 +6,7 @@
     display: flex;
     flex-direction: column;
 
-    width: 50%;
+    width: 45%;
     .sleep-entry {
       font-family: "Nunito Sans", sans-serif;
       border: 0.1rem solid $main-purple;
@@ -41,9 +41,19 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        button {
-          margin: 0 3%;
+        i {
+          display: inline-block;
+          font-size: 1.2rem;
+          margin: 50% 0;
           cursor: pointer;
+          color: $main-purple;
+          transition: 0.2s color ease;
+          &.fa-trash-alt:hover {
+            color: #f50057;
+          }
+          &.fa-edit:hover {
+            color: #00b0ff;
+          }
         }
       }
     }
