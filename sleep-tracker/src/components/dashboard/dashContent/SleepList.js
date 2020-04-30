@@ -38,7 +38,10 @@ const SleepList = ({ deleteLog, sleepData, startEditLog }) => {
                 <h2> {moment(d.start_time).format("ddd, MMMM Do YYYY")} </h2>
                 <h3> Hours slept: {time_slept}</h3>
               </div>
-              <p>Notes: {d.notes} </p>
+              <div className="note-record">
+                <h3>Notes</h3>
+                <p> {d.notes} </p>
+              </div>
               <div className="cta-btn">
                 <button onClick={() => deleteLog(d.sleep_record_id)}>
                   Delete
