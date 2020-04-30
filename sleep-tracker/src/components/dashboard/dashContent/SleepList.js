@@ -44,9 +44,11 @@ const SleepList = ({ deleteLog, sleepData, startEditLog }) => {
               </div>
               <div className="cta-btn">
                 <button onClick={() => deleteLog(d.sleep_record_id)}>
-                  Delete
+                  <i class="fas fa-trash-alt"></i>
                 </button>
-                <button onClick={() => handleEdit(d)}>EDIT</button>
+                <button onClick={() => handleEdit(d)}>
+                  <i class="fas fa-edit"></i>
+                </button>
               </div>
             </div>
           );
