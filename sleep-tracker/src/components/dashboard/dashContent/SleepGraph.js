@@ -10,7 +10,7 @@ import {
   Button,
   Layer,
 } from "grommet";
-
+import { connect } from "react-redux";
 import ClockLoader from "react-spinners/ClockLoader";
 import {
   AreaChart,
@@ -18,13 +18,12 @@ import {
   CartesianGrid,
   XAxis,
   YAxis,
-  Legend,
   Tooltip,
 } from "recharts";
 import { axiosWithAuth } from "../../../utils/axiosWithAuth";
 import moment from "moment";
 
-export default function SleepGraph(props) {
+const SleepGraph = (props) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [show, setShow] = React.useState();
@@ -139,4 +138,8 @@ export default function SleepGraph(props) {
       </Box>
     </Grommet>
   );
-}
+};
+const mapState = state => ({
+  
+})
+export default connect(mapState, null)(SleepGraph);
