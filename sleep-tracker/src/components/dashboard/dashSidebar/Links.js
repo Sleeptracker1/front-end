@@ -1,20 +1,20 @@
 import React from "react";
-
+import { Container } from "./dashSideMenu/menuItem.styled";
 import { Link } from "react-router-dom";
 
 export default function Links() {
   return (
     <ul>
-      <li>
+      <Container>
         <Link to={"/user-dashboard"}>User Dashboard</Link>
-      </li>
+      </Container>
 
-      <li>
+      <Container>
         <Link to={"/sleep-routine"}>Sleep Routine</Link>
-      </li>
-      <li>
+      </Container>
+      <Container>
         <Link to={"/add-sleep-routine"}>Add Sleep Routine</Link>
-      </li>
+      </Container>
     </ul>
   );
 }

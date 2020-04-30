@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
-  Distribution,
   Box,
   Grommet,
-  Chart,
   Table,
   TableHeader,
   TableRow,
