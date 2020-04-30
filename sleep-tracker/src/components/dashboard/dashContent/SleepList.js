@@ -1,33 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import SleepGraph from "./SleepGraph";
-import { Distribution, Grommet, Box, Button } from "grommet";
-import { useParams, useHistory } from "react-router-dom";
+import { Grommet, Box, Button } from "grommet";
+import { useHistory } from "react-router-dom";
 import ClockLoader from "react-spinners/ClockLoader";
-import { axiosWithAuth } from "./utils/axiosWithAuth";
 import moment from "moment";
 
 import { deleteLog } from "../../../redux/actions/sleepLogActions";
 
 const SleepList = ({ deleteLog, sleepData }) => {
-  console.log(sleepData);
   const { push } = useHistory();
-  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
-    
-    // axiosWithAuth()
-    //   .get(`api/sleep/`)
-    //   .then((res) => {
-    //     console.log("res in sleep list,", res);
-    //     setData(res.data);
-    //     setIsLoading(false);
-    //   });
   }, []);
 
-  const Edit = (props) => {
+  const handleEdit = (logToEdit) => {
     push("/add-sleep-routine");
   };
 
@@ -62,7 +50,7 @@ const SleepList = ({ deleteLog, sleepData }) => {
                   X
                 </Button>
                 {console.log("d", d)}
-                <Button label="edit" onClick={() => Edit(data.user_id)}>
+                <Button label="edit" onClick={() => handleEdit(d)}>
                   EDIT
                 </Button>
               </Box>
