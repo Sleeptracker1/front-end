@@ -12,7 +12,15 @@ import {
 } from "grommet";
 
 import ClockLoader from "react-spinners/ClockLoader";
-import { AreaChart, Area, CartesianGrid, XAxis, YAxis } from "recharts";
+import {
+  AreaChart,
+  Area,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Legend,
+  Tooltip,
+} from "recharts";
 import { axiosWithAuth } from "../../../utils/axiosWithAuth";
 import moment from "moment";
 
@@ -50,7 +58,7 @@ export default function SleepGraph(props) {
         direction="column"
         pad="small"
         animation="slideLeft"
-        background="light-2"
+        background="white"
       >
         <AreaChart
           width={800}
@@ -69,12 +77,13 @@ export default function SleepGraph(props) {
             stroke="navy"
             fill="blue"
           />
-          <CartesianGrid stroke="darkgrey" strokeDasharray="2 2" />
-          <XAxis dataKey="start_date" interval={2} />
+          <CartesianGrid strokeDasharray="5 5" />
+          <XAxis dataKey="start_date" interval={1} />
+          <Tooltip />
 
           <YAxis dataKey="time_slept" />
         </AreaChart>
-        <Box>
+        {/* <Box>
           <Button
             label="show legend"
             alignSelf="start"
@@ -124,7 +133,7 @@ export default function SleepGraph(props) {
               <Button label="close" onClick={() => setShow(false)} />
             </Layer>
           )}
-        </Box>
+        </Box> */}
 
         <Box direction="column"></Box>
       </Box>
