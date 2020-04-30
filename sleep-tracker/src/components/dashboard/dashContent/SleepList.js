@@ -37,10 +37,10 @@ const SleepList = ({ deleteLog, sleepData, startEditLog }) => {
               {moment(d.end_time).hours() - moment(d.start_time).hours()}
             </h2>
 
-            <Button onClick={() => deleteLog(d.sleep_record_id)}>
+            <button onClick={() => deleteLog(d.sleep_record_id)}>
               Delete X
-            </Button>
-            <Button onClick={() => handleEdit(d)}>EDIT</Button>
+            </button>
+            <button onClick={() => handleEdit(d)}>EDIT</button>
           </div>
         ))}
       </div>

@@ -25,7 +25,6 @@ const SleepEntryForm = ({
     rating: "",
     notes: "",
   });
-  
 
   useEffect(() => {
     if (editing) {
@@ -52,7 +51,7 @@ const SleepEntryForm = ({
     const postValues = {
       start_time: start._i,
       end_time: end._i,
-      score: parseInt(formInputs.rating),
+      score: formInputs.rating,
       users_id: userId,
       notes: formInputs.notes,
     };
@@ -67,6 +66,7 @@ const SleepEntryForm = ({
         push("/user-dashboard");
       });
     } else {
+      console.log(postValues);
       createLog(postValues, () => {
         push("/user-dashboard");
       });
@@ -149,7 +149,7 @@ const actions = {
   completeEditLog,
 };
 const mapState = (state) => ({
-  userId: state.auth.currentUser.userId,
+  userId: state.auth.currentUser.users_id,
   editing: state.sleepLog.editing,
   logToEdit: state.sleepLog.logToEdit,
 });

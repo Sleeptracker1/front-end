@@ -3,7 +3,7 @@ import SleepList from "./SleepList";
 
 const DashContent = () => {
   return (
-    <div>
+    <div className="content-container">
       <SleepList />
     </div>
   )
