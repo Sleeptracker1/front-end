@@ -5,9 +5,12 @@ import { useHistory } from "react-router-dom";
 import ClockLoader from "react-spinners/ClockLoader";
 import moment from "moment";
 
-import { deleteLog } from "../../../redux/actions/sleepLogActions";
+import {
+  deleteLog,
+  startEditLog,
+} from "../../../redux/actions/sleepLogActions";
 
-const SleepList = ({ deleteLog, sleepData }) => {
+const SleepList = ({ deleteLog, sleepData, startEditLog }) => {
   const { push } = useHistory();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -16,7 +19,9 @@ const SleepList = ({ deleteLog, sleepData }) => {
   }, []);
 
   const handleEdit = (logToEdit) => {
-    push("/add-sleep-routine");
+    startEditLog(logToEdit, () => {
+      push("/add-sleep-routine");
+    });
   };
 
   return (
@@ -43,14 +48,13 @@ const SleepList = ({ deleteLog, sleepData }) => {
                   </h2>
                 </Box>
                 <Button
-                  id={d.sleep_record_id}
-                  label="delete"
+                  
                   onClick={() => deleteLog(d.sleep_record_id)}
                 >
-                  X
+                  Delete X
                 </Button>
                 {console.log("d", d)}
-                <Button label="edit" onClick={() => handleEdit(d)}>
+                <Button onClick={() => handleEdit(d)}>
                   EDIT
                 </Button>
               </Box>
@@ -64,6 +68,7 @@ const SleepList = ({ deleteLog, sleepData }) => {
 
 const actions = {
   deleteLog,
+  startEditLog,
 };
 const mapState = (state) => ({
   sleepData: state.sleepLog.sleepLog,

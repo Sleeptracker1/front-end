@@ -12,7 +12,6 @@ export default function SleepGraph(props) {
     axiosWithAuth()
       .get("api/sleep/")
       .then((res) => {
-        console.log("res in sleep graph,", res);
         setData(res.data);
       });
     setIsLoading(false);
@@ -21,7 +20,6 @@ export default function SleepGraph(props) {
   const graphData = data.map((result) => {
     const diff2 = moment(result.end_time).diff(moment(result.start_time));
     const diffDuration = moment.duration(diff2);
-    console.log("res in sleep graph map", result);
     const start_date = moment(result.start_time).format("MMM Do");
     const time_slept = diffDuration.hours();
     const dataFromGraphData = {
@@ -34,7 +32,6 @@ export default function SleepGraph(props) {
   return (
     <Grommet>
       {isLoading ? <ClockLoader /> : null}
-      {console.log("graphdata", graphData)}
       <Box
         direction="column"
         pad="small"

@@ -4,6 +4,7 @@ import {
   LOADING_LOGS,
   DELETE_LOG,
   UPDATE_LOG,
+  START_UPDATE,
   POST_LOG,
   ERR_LOG,
 } from "../types/sleepLogTypes";
@@ -48,5 +49,16 @@ export const deleteLog = (logId) => async (dispatch) => {
     dispatch({ type: DELETE_LOG, payload: logId });
   } catch (err) {
     dispatch({ type: ERR_LOG, payload: err.message });
+  }
+};
+
+
+export const startEditLog = (logEntry, redirect) => async (dispatch) => {
+  try {
+    console.log(logEntry)
+    dispatch({ type: START_UPDATE, payload: logEntry });
+    redirect();
+  } catch (err) {
+    console.log(err);
   }
 };

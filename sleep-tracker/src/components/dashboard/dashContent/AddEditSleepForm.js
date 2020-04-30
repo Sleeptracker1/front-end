@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Box, Form, Grommet } from "grommet";
 import moment from "moment";
 
 import { createLog } from "../../../redux/actions/sleepLogActions";
 
-const AddEditSleepForm = ({ createLog, userId }) => {
+const AddEditSleepForm = ({ createLog, userId, editing, logToEdit }) => {
   const [formInputs, setFormInputs] = useState({
     startDate: "",
     startTime: "",
@@ -14,12 +14,12 @@ const AddEditSleepForm = ({ createLog, userId }) => {
     rating: 0,
     notes: "",
   });
-  const [loading, setLoading] = useState(false);
-
+  const [edit, setEdit] = useState(false);
+  
+  
   const evalutateTime = () => {
     const start = moment(`${formInputs.startDate}T${formInputs.startTime}`);
     const end = moment(`${formInputs.endDate}T${formInputs.endTime}`);
-    const diff = end.diff(start);
     return { start, end };
   };
   const AddDateTime = (e) => {
@@ -102,5 +102,7 @@ const actions = {
 };
 const mapState = (state) => ({
   userId: state.auth.currentUser.userId,
+  editing: state.sleepLog.editing,
+  logToEdit: state.sleepLog.logToEdit,
 });
 export default connect(mapState, actions)(AddEditSleepForm);
