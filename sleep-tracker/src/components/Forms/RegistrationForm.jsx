@@ -10,14 +10,10 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import { connect } from "react-redux";
 import { registerUser } from "../../redux/actions/authActions";
-
-const StyledForm = styled.form`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 50px;
-`;
+import {StyledError, StyledForm, split} from './LoginForm'
+import SplitText from 'react-pose-text';
+import {NavLink} from 'react-router-dom'
+import Logo from './Logo'
 
 const RegistrationForm = ({ registerUser }) => {
   const { push } = useHistory();
@@ -25,7 +21,7 @@ const RegistrationForm = ({ registerUser }) => {
     username: yup
       .string()
       .required("User Name is a required field.")
-      .min(2, "minimum four characters")
+      .min(2, "minimum two characters")
       .max(20, "max twenty characters"),
 
     password: yup.string().required().min(6, "must be at least six characters"),
@@ -87,13 +83,14 @@ const RegistrationForm = ({ registerUser }) => {
 
   return (
     <div>
+     <Logo/>
       <StyledForm onSubmit={submitPostRequest}>
         <label htmlFor="userNameBox"></label>
-        <Input
+        <Input style={{ fontSize: '2rem'}}
           color="secondary"
           startAdornment={
             <InputAdornment position="start">
-              <AccountCircle />
+              <AccountCircle fontSize="large" />
             </InputAdornment>
           }
           type="text"
@@ -104,16 +101,16 @@ const RegistrationForm = ({ registerUser }) => {
           onChange={inputChange}
         />
         {validationErrors.username.length > 0 ? (
-          <p> {validationErrors.name}</p>
+          <StyledError> {validationErrors.name}</StyledError>
         ) : null}
 
         <label htmlFor="passwordBox"></label>
         <Input
-          style={{ marginTop: "3vh", marginBottom: "3vh" }}
+          style={{ fontSize: '2rem', marginTop: "3vh", marginBottom: "2vh" }}
           color="secondary"
           startAdornment={
             <InputAdornment position="start">
-              <LockOpenIcon />
+              <LockOpenIcon fontSize="large" />
             </InputAdornment>
           }
           type="password"
@@ -124,10 +121,10 @@ const RegistrationForm = ({ registerUser }) => {
           onChange={inputChange}
         />
         {validationErrors.password.length > 0 ? (
-          <p> {validationErrors.password}</p>
+          <StyledError> {validationErrors.password}</StyledError>
         ) : null}
 
-        <Button
+        <Button style={{margin: '1vh', fontSize: '1.5rem'}}
           variant="contained"
           color="primary"
           type="submit"
@@ -135,6 +132,18 @@ const RegistrationForm = ({ registerUser }) => {
         >
           Submit
         </Button>
+        <p style={{fontFamily: 'Manrope, sans-serif',
+fontSize: '1.5rem', margin: '1vh'}}>
+  <SplitText initialPose="exit" pose="enter" charPoses={split}>Already a Member?</SplitText></p>
+       <NavLink style={{textDecoration: "none"}} to="/"> <Button style={{margin: '1vh', fontSize: '1.5rem'}}
+          variant="contained"
+          color="primary"
+          type="submit"
+        >
+          Log In
+        </Button>
+        </NavLink> 
+      
       </StyledForm>
     </div>
   );
