@@ -6,6 +6,7 @@ import {
   UPDATE_LOG,
   ERR_LOG,
   POST_LOG,
+  CLEAR_UPDATE,
   START_UPDATE,
 } from "../types/sleepLogTypes";
 
@@ -23,8 +24,8 @@ const fetchLogs = (state = initialState, payload) => {
       ...state,
       sleepLog: payload,
       isLoading: false,
-      editing: false,
-      logToEdit: {},
+      // editing: false,
+      // logToEdit: {},
     };
   }
 };
@@ -61,11 +62,8 @@ const startUpdate = (state = initialState, payload) => {
 
 const completeUpdateLog = (state = initialState, payload) => {
   if (payload) {
-    console.log("hello from reducer");
     return {
       ...state,
-      editing: false,
-      logToEdit: {},
       sleepLog: [
         ...state.sleepLog.map((log) => {
           if (log.sleep_record_id === payload.sleep_record_id) {
@@ -78,7 +76,13 @@ const completeUpdateLog = (state = initialState, payload) => {
     };
   }
 };
-
+const clearUpdate = (state = initialState, payload) => {
+  return {
+    ...state,
+    editing: false,
+    logToEdit: {},
+  };
+};
 const deleteLog = (state = initialState, payload) => {
   if (payload) {
     return {
@@ -100,4 +104,5 @@ export default createReducer(initialState, {
   [DELETE_LOG]: deleteLog,
   [POST_LOG]: createLog,
   [START_UPDATE]: startUpdate,
+  [CLEAR_UPDATE]: clearUpdate
 });

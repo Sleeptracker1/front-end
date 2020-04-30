@@ -48,10 +48,11 @@ const SleepEntryForm = ({
   const AddDateTime = (e) => {
     e.preventDefault();
     const { start, end } = evalutateTime();
+    const formatRating = formInputs.rating.split(' ');
     const postValues = {
       start_time: start._i,
       end_time: end._i,
-      score: formInputs.rating,
+      score: formatRating[0],
       users_id: userId,
       notes: formInputs.notes,
     };
@@ -139,7 +140,6 @@ const SleepEntryForm = ({
               </select>
             </label>
             <br />
-
             <input
               type="textarea"
               name="notes"
@@ -147,7 +147,6 @@ const SleepEntryForm = ({
               onChange={onChange}
               placeholder="notes"
             />
-
             <br />
 
             <input type="submit" value="submit" className="button" />

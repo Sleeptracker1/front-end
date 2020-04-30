@@ -10,13 +10,20 @@ import {
   Button,
   Layer,
 } from "grommet";
-
+import { connect } from "react-redux";
 import ClockLoader from "react-spinners/ClockLoader";
-import { AreaChart, Area, CartesianGrid, XAxis, YAxis } from "recharts";
+import {
+  AreaChart,
+  Area,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from "recharts";
 import { axiosWithAuth } from "../../../utils/axiosWithAuth";
 import moment from "moment";
 
-export default function SleepGraph(props) {
+const SleepGraph = ({logData}) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [show, setShow] = React.useState();
@@ -28,7 +35,7 @@ export default function SleepGraph(props) {
         setData(res.data);
       });
     setIsLoading(false);
-  }, []);
+  }, [logData]);
 
   const graphData = data.map((result) => {
     const diff2 = moment(result.end_time).diff(moment(result.start_time));
@@ -50,7 +57,7 @@ export default function SleepGraph(props) {
         direction="column"
         pad="small"
         animation="slideLeft"
-        background="light-2"
+        background="white"
       >
         <AreaChart
           width={800}
@@ -69,12 +76,13 @@ export default function SleepGraph(props) {
             stroke="navy"
             fill="blue"
           />
-          <CartesianGrid stroke="darkgrey" strokeDasharray="2 2" />
-          <XAxis dataKey="start_date" interval={2} />
+          <CartesianGrid strokeDasharray="5 5" />
+          <XAxis dataKey="start_date" interval={1} />
+          <Tooltip />
 
           <YAxis dataKey="time_slept" />
         </AreaChart>
-        <Box>
+        {/* <Box>
           <Button
             label="show legend"
             alignSelf="start"
@@ -124,10 +132,14 @@ export default function SleepGraph(props) {
               <Button label="close" onClick={() => setShow(false)} />
             </Layer>
           )}
-        </Box>
+        </Box> */}
 
         <Box direction="column"></Box>
       </Box>
     </Grommet>
   );
-}
+};
+const mapState = state => ({
+  logData: state.sleepLog.sleepLog
+})
+export default connect(mapState, null)(SleepGraph);
