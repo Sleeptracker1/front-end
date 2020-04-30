@@ -7,7 +7,7 @@ import { getLogs } from "../../redux/actions/sleepLogActions";
 const DashContainer = ({ getLogs }) => {
   useEffect(() => {
     getLogs();
-  });
+  },[]);
   return (
     <div className="dashboard-container">
       <DashSidebar />
