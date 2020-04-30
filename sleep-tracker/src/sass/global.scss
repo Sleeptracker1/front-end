@@ -11,3 +11,9 @@
 html {
   font-size: 62.5%;
 }
+
+.boxForGraphAndTable {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
