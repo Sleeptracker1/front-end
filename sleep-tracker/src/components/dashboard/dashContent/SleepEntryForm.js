@@ -48,7 +48,7 @@ const SleepEntryForm = ({
   const AddDateTime = (e) => {
     e.preventDefault();
     const { start, end } = evalutateTime();
-    const formatRating = formInputs.rating.split(' ');
+    const formatRating = formInputs.rating.split(" ");
     console.log(formatRating);
     const postValues = {
       start_time: start._i,
@@ -83,78 +83,80 @@ const SleepEntryForm = ({
   };
 
   return (
-    <Grommet>
-      <Box width="100vw" height="100vh" background="#C6EBBE">
-        <Box
-          direction="column"
-          pad="medium"
-          animation="fadeIn"
-          className="smart-green"
-          id="Box"
-          background="#3626A7"
-          justify="center"
-          height="large"
-          width="large"
-          align="center"
-        >
-          <Form className="smart-green" onSubmit={AddDateTime}>
-            <label>
-              Start Date and Time:
-              <input
-                type="date"
-                name="startDate"
-                onChange={onChange}
-                value={formInputs.startDate}
-              />
-              <input
-                type="time"
-                name="startTime"
-                value={formInputs.startTime}
-                onChange={onChange}
-              />
-            </label>
+    <div className="">
+      {/* <Grommet>
+        <Box width="100vw" height="100vh" background="#C6EBBE">
+          <Box
+            direction="column"
+            pad="medium"
+            animation="fadeIn"
+            className="smart-green"
+            id="Box"
+            background="#fff"
+            justify="center"
+            height="large"
+            width="large"
+            align="center"
+          > */}
+            <Form className="smart-green" onSubmit={AddDateTime}>
+              <label>
+                Start Date and Time:
+                <input
+                  type="date"
+                  name="startDate"
+                  onChange={onChange}
+                  value={formInputs.startDate}
+                />
+                <input
+                  type="time"
+                  name="startTime"
+                  value={formInputs.startTime}
+                  onChange={onChange}
+                />
+              </label>
 
-            <br />
-            <label>
-              End Date and Time:
+              <br />
+              <label>
+                End Date and Time:
+                <input
+                  type="date"
+                  name="endDate"
+                  onChange={onChange}
+                  value={formInputs.endDate}
+                />
+                <input
+                  type="time"
+                  name="endTime"
+                  value={formInputs.endTime}
+                  onChange={onChange}
+                />
+              </label>
+              <br />
+              <label>
+                How good was your sleep?
+                <select onChange={onChange} name="rating">
+                  <option id="4">4 😀</option>
+                  <option id="3">3 🙂</option>
+                  <option id="2">2 😑</option>
+                  <option id="1">1 😭</option>
+                </select>
+              </label>
+              <br />
               <input
-                type="date"
-                name="endDate"
+                type="textarea"
+                name="notes"
+                value={formInputs.notes}
                 onChange={onChange}
-                value={formInputs.endDate}
+                placeholder="notes"
               />
-              <input
-                type="time"
-                name="endTime"
-                value={formInputs.endTime}
-                onChange={onChange}
-              />
-            </label>
-            <br />
-            <label>
-              How good was your sleep?
-              <select onChange={onChange} name="rating">
-                <option id="4">4 😀</option>
-                <option id="3">3 🙂</option>
-                <option id="2">2 😑</option>
-                <option id="1">1 😭</option>
-              </select>
-            </label>
-            <br />
-            <input
-              type="textarea"
-              name="notes"
-              value={formInputs.notes}
-              onChange={onChange}
-              placeholder="notes"
-            />
-            <br />
+              <br />
 
-            <input type="submit" value="submit" className="button" />
-          </Form>
-        </Box>
-      </Box>
-    </Grommet>
+              <input type="submit" value="submit" className="button" />
+            </Form>
+          {/* </Box> */}
+        {/* </Box> */}
+      {/* </Grommet> */}
+    </div>
   );
 };
 const actions = {

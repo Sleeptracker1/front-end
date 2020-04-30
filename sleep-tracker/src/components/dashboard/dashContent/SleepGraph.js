@@ -23,10 +23,10 @@ import {
 import { axiosWithAuth } from "../../../utils/axiosWithAuth";
 import moment from "moment";
 
-const SleepGraph = ({logData}) => {
+const SleepGraph = ({ logData }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [show, setShow] = React.useState();
+  // const [show, setShow] = React.useState();
   useEffect(() => {
     setIsLoading(true);
     axiosWithAuth()
@@ -48,7 +48,9 @@ const SleepGraph = ({logData}) => {
     };
     return dataFromGraphData;
   });
-
+  const sortedData = graphData.sort((a,b) => {
+    return (a.start_date > b.start_date ? 1 : -1);
+  });
   return (
     <Grommet>
       {isLoading ? <ClockLoader /> : null}
@@ -139,7 +141,7 @@ const SleepGraph = ({logData}) => {
     </Grommet>
   );
 };
-const mapState = state => ({
-  logData: state.sleepLog.sleepLog
-})
+const mapState = (state) => ({
+  logData: state.sleepLog.sleepLog,
+});
 export default connect(mapState, null)(SleepGraph);
