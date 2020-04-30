@@ -4,3 +4,4 @@ export const DELETE_LOG = "DELETE_LOG";
 export const UPDATE_LOG = "UPDATE_LOG";
 export const POST_LOG = "POST_LOG";
 export const ERR_LOG = "ERR_LOG";
+export const START_UPDATE = "UPDATE_LOG";

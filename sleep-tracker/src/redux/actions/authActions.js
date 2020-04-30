@@ -1,4 +1,4 @@
-import axios from "axios";
+import {axiosWithAuth} from "../../utils/axiosWithAuth";
 import {
   LOGIN_USER,
   REGISTER_USER,
@@ -6,16 +6,7 @@ import {
   LOADING_USER,
 } from "../types/authTypes";
 
-const axiosWithAuth = () => {
-  const token = localStorage.getItem("token");
-  return axios.create({
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `${token}`,
-    },
-    baseURL: "https://bw-ft-sleep-tracker-1.herokuapp.com",
-  });
-};
+
 
 export const registerUser = (credentials, redirect) => async (dispatch) => {
   try {

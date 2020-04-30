@@ -7,7 +7,7 @@ import { DashStyles } from "./styled-component/dashboardContainer";
 import { lightTheme, darkTheme } from "./styled-component/theme";
 import SleepDisplay from "./components/dashboard/dashContent/SleepDisplay";
 import AddEditSleepForm from "./components/dashboard/dashContent/AddEditSleepForm";
-import PrivateRoute from "./components/PrivateRoute";
+import PrivateRoute from "./utils/PrivateRoute";
 import LoginForm from "./components/Forms/LoginForm";
 import RegistrationForm from "./components/Forms/RegistrationForm";
 
@@ -34,13 +34,19 @@ function App({ loggedIn }) {
         <Route exact path="/login" component={LoginForm} />
         <Route exact path="/register" component={RegistrationForm} />
         <Switch>
-          <PrivateRoute
+          <Route
             exact
             path="/user-dashboard"
             component={DashContainer}
           />
           <Route exact path="/sleep-routine" component={SleepDisplay} />
-          <Route exact path="/add-sleep-routine" component={AddEditSleepForm} />
+
+          <Route
+            exact
+            path="/add-sleep-routine"
+            component={AddEditSleepForm}
+          />
+
         </Switch>
       </ThemeProvider>
     </div>

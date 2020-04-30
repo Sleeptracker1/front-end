@@ -12,10 +12,12 @@ import {
   Button,
   Layer,
 } from "grommet";
+
 import ClockLoader from "react-spinners/ClockLoader";
 import { AreaChart, Area, CartesianGrid, XAxis, YAxis } from "recharts";
-import { axiosWithAuth } from "./utils/axiosWithAuth";
+import { axiosWithAuth } from "../../../utils/axiosWithAuth";
 import moment from "moment";
+
 export default function SleepGraph(props) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -25,7 +27,6 @@ export default function SleepGraph(props) {
     axiosWithAuth()
       .get("api/sleep/")
       .then((res) => {
-        console.log("res in sleep graph,", res);
         setData(res.data);
       });
     setIsLoading(false);
@@ -34,7 +35,6 @@ export default function SleepGraph(props) {
   const graphData = data.map((result) => {
     const diff2 = moment(result.end_time).diff(moment(result.start_time));
     const diffDuration = moment.duration(diff2);
-    console.log("res in sleep graph map", result);
     const start_date = moment(result.start_time).format("MMM Do");
     const time_slept = diffDuration.hours();
     const dataFromGraphData = {
@@ -47,7 +47,6 @@ export default function SleepGraph(props) {
   return (
     <Grommet>
       {isLoading ? <ClockLoader /> : null}
-      {console.log("graphdata", graphData)}
       <Box
         id="boxForGraphAndTable"
         direction="column"
