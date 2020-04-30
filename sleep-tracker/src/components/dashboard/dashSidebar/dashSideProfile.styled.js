@@ -10,6 +10,7 @@ export const Container = styled.div`
 
 export const ProfileImg = styled.img`
   height: 5rem;
+  width: 5rem;
 `;
 
 export const ProfileUsername = styled.h1`
