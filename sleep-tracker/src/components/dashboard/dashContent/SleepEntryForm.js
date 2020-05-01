@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { Box, Form, Grommet } from "grommet";
 import moment from "moment";
-import "../../../sass/SleepEntryForm.scss";
+import Sleeper from "../../../assets/images/sleeping.svg";
 import {
   createLog,
   completeEditLog,
 } from "../../../redux/actions/sleepLogActions";
 
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
 const SleepEntryForm = ({
   createLog,
   userId,
@@ -18,25 +23,30 @@ const SleepEntryForm = ({
 }) => {
   const { push } = useHistory();
   const [formInputs, setFormInputs] = useState({
-    startDate: "",
-    startTime: "",
-    endDate: "",
-    endTime: "",
     rating: "4",
     notes: "",
   });
+
+  // material ui
+  const [selectStart, setSelectStart] = useState(new Date());
+  const [selectEnd, setSelectEnd] = useState(new Date());
+
+  const handleStart = (date) => {
+    setSelectStart(date);
+  };
+  const handleEnd = (date) => {
+    setSelectEnd(date);
+  };
 
   useEffect(() => {
     if (editing) {
       setFormInputs({
         ...formInputs,
-        startDate: moment(logToEdit.start_time).format("YYYY-MM-DD"),
-        startTime: moment(logToEdit.start_time).format("hh:mm"),
-        endDate: moment(logToEdit.end_time).format("YYYY-MM-DD"),
-        endTime: moment(logToEdit.end_time).format("hh:mm"),
         rating: logToEdit.score,
         notes: logToEdit.notes,
       });
+      setSelectEnd(logToEdit.end_time);
+      setSelectStart(logToEdit.start_time);
     }
   }, [editing]);
 
@@ -49,10 +59,18 @@ const SleepEntryForm = ({
     e.preventDefault();
     const { start, end } = evalutateTime();
     const formatRating = formInputs.rating.split(" ");
-    console.log(formatRating);
+
+    //testing material ui
+
+    console.log(moment(selectStart).format());
+    const diff = moment(selectEnd).diff(moment(selectStart));
+
+    const diffDur = moment.duration(diff);
+    console.log(diffDur.hours());
+
     const postValues = {
-      start_time: start._i,
-      end_time: end._i,
+      start_time: selectStart,
+      end_time: selectEnd,
       score: formatRating[0],
       users_id: userId,
       notes: formInputs.notes,
@@ -83,57 +101,76 @@ const SleepEntryForm = ({
   };
 
   return (
-    <div className="">
-      {/* <Grommet>
-        <Box width="100vw" height="100vh" background="#C6EBBE">
-          <Box
-            direction="column"
-            pad="medium"
-            animation="fadeIn"
-            className="smart-green"
-            id="Box"
-            background="#fff"
-            justify="center"
-            height="large"
-            width="large"
-            align="center"
-          > */}
-            <Form className="smart-green" onSubmit={AddDateTime}>
-              <label>
-                Start Date and Time:
-                <input
-                  type="date"
-                  name="startDate"
-                  onChange={onChange}
-                  value={formInputs.startDate}
-                />
-                <input
-                  type="time"
-                  name="startTime"
-                  value={formInputs.startTime}
-                  onChange={onChange}
-                />
-              </label>
+    <div className="form-container">
+      <form className="form-wrapper" onSubmit={AddDateTime}>
+        <div className="img-container">
+          <img src={Sleeper} alt="sleeping svg" />
+        </div>
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+          <div className="material-wrapper">
+            {/* start */}
+            <div className="time-table">
+              <KeyboardDatePicker
+                disableToolbar
+                className="date-"
+                variant="inline"
+                format="YYYY/MM/DD"
+                margin="normal"
+                id="date-picker-inline"
+                label="Start Date"
+                value={selectStart}
+                onChange={handleStart}
+                minDate={new Date()}
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+                InputProps={{ disableUnderline: true }}
+              />
+              <KeyboardTimePicker
+                margin="normal"
+                id="time-picker"
+                label="Start Time"
+                value={selectStart}
+                onChange={handleStart}
+                KeyboardButtonProps={{
+                  "aria-label": "change time",
+                }}
+                InputProps={{ disableUnderline: true }}
+              />
+            </div>
 
-              <br />
+            {/* end */}
+            <div className="time-table">
+              <KeyboardDatePicker
+                className="date-"
+                margin="normal"
+                id="date-picker-dialog"
+                label="End Date"
+                format="YYYY/MM/DD"
+                value={selectEnd}
+                onChange={handleEnd}
+                minDate={new Date()}
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+                InputProps={{ disableUnderline: true }}
+              />
+              <KeyboardTimePicker
+                margin="normal"
+                id="time-picker"
+                label="End Time"
+                value={selectEnd}
+                onChange={handleEnd}
+                KeyboardButtonProps={{
+                  "aria-label": "change time",
+                }}
+                InputProps={{ disableUnderline: true }}
+              />
+            </div>
+
+            <div className="default-inputs">
               <label>
-                End Date and Time:
-                <input
-                  type="date"
-                  name="endDate"
-                  onChange={onChange}
-                  value={formInputs.endDate}
-                />
-                <input
-                  type="time"
-                  name="endTime"
-                  value={formInputs.endTime}
-                  onChange={onChange}
-                />
-              </label>
-              <br />
-              <label>
-                How good was your sleep?
+                <p>Did you sleep well?</p>
                 <select onChange={onChange} name="rating">
                   <option id="4">4 😀</option>
                   <option id="3">3 🙂</option>
@@ -141,21 +178,21 @@ const SleepEntryForm = ({
                   <option id="1">1 😭</option>
                 </select>
               </label>
-              <br />
-              <input
-                type="textarea"
+              <textarea
+                className="form-input"
+                type="text"
                 name="notes"
+                rows="3"
                 value={formInputs.notes}
                 onChange={onChange}
                 placeholder="notes"
               />
-              <br />
 
-              <input type="submit" value="submit" className="button" />
-            </Form>
-          {/* </Box> */}
-        {/* </Box> */}
-      {/* </Grommet> */}
+              <button className="form-submit">Submit</button>
+            </div>
+          </div>
+        </MuiPickersUtilsProvider>
+      </form>
     </div>
   );
 };

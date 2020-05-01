@@ -1,0 +1,114 @@
+//form styles
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  margin: -1% auto;
+  margin-left: 30%;
+  padding: 3% 0;
+
+  .img-container {
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 5%;
+    img {
+      width: 50%;
+    }
+  }
+  //input
+  .form-input,
+  input[type="text"] {
+    width: 100%;
+    height: 2.5rem;
+    text-align: center;
+    background-color: rgba(108, 99, 255, 0.31);
+    letter-spacing: 0.1rem;
+    border: 0.1em solid #fdfffc;
+    vertical-align: bottom;
+    color: #3f3d55;
+    font-size: 1em;
+    padding: 0.34em 0.5em;
+    border-radius: 0.5rem;
+    transition: all 0.5s;
+    margin-top: 5%;
+    box-shadow: $box-shadow;
+    &:focus {
+      outline: none;
+      box-shadow: $box-shadow-inset;
+      transform: scale(0.99);
+    }
+    &::placeholder {
+      color: #3f3d55;
+    }
+  }
+}
+
+.material-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5%;
+  width: 61%;
+  box-shadow: $box-shadow;
+  border-radius: 1rem;
+  .time-table {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+
+    label {
+      font-size: 1.6rem;
+    }
+    .date- {
+      margin-right: 10%;
+    }
+  }
+}
+
+.default-inputs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 5%;
+  justify-content: space-between;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    p {
+      margin: 1% 0;
+    }
+  }
+  textarea {
+    resize: none;
+    margin-top: 3%;
+  }
+  button {
+    width: 100%;
+    margin-top: 2%;
+
+    min-width: 2rem;
+    border: 0.1rem solid #fdfffc;
+    border-radius: 0.5rem;
+    text-align: center;
+    cursor: pointer;
+    color: #fcfcfc;
+    background: #ccc;
+    padding: 0.5em;
+    height: 2.25rem;
+    vertical-align: middle;
+    line-height: 1rem;
+    transition: all 0.3s;
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      background-color: rgba(108, 99, 255, 1);
+    }
+  }
+}
