@@ -10,7 +10,7 @@ import SleepEntryForm from "./components/dashboard/dashContent/SleepEntryForm";
 import PrivateRoute from "./utils/PrivateRoute";
 import LoginForm from "./components/Forms/LoginForm";
 import RegistrationForm from "./components/Forms/RegistrationForm";
-
+import StaticContainer from "./components/dashboard/staticContainer";
 function App({ loggedIn }) {
   return (
     <div className="App">
@@ -22,7 +22,7 @@ function App({ loggedIn }) {
         <Switch>
           <PrivateRoute exact path="/user-dashboard" component={DashContainer} />
           <PrivateRoute exact path="/sleep-routine" component={SleepDisplay} />
-          <PrivateRoute exact path="/add-sleep-routine" component={SleepEntryForm} />
+          <Route exact path="/add-sleep-routine" component={StaticContainer} />
         </Switch>
       </ThemeProvider>
     </div>

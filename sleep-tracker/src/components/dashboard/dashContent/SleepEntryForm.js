@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { Box, Form, Grommet } from "grommet";
 import moment from "moment";
-import "../../../sass/SleepEntryForm.scss";
 import {
   createLog,
   completeEditLog,
@@ -83,79 +81,63 @@ const SleepEntryForm = ({
   };
 
   return (
-    <div className="">
-      {/* <Grommet>
-        <Box width="100vw" height="100vh" background="#C6EBBE">
-          <Box
-            direction="column"
-            pad="medium"
-            animation="fadeIn"
-            className="smart-green"
-            id="Box"
-            background="#fff"
-            justify="center"
-            height="large"
-            width="large"
-            align="center"
-          > */}
-            <Form className="smart-green" onSubmit={AddDateTime}>
-              <label>
-                Start Date and Time:
-                <input
-                  type="date"
-                  name="startDate"
-                  onChange={onChange}
-                  value={formInputs.startDate}
-                />
-                <input
-                  type="time"
-                  name="startTime"
-                  value={formInputs.startTime}
-                  onChange={onChange}
-                />
-              </label>
+    <div className="form-container">
+      <form className="form-wrapper" onSubmit={AddDateTime}>
+        <label>
+          Start Date and Time:
+          <input
+            type="date"
+            name="startDate"
+            className="form-input"
+            onChange={onChange}
+            value={formInputs.startDate}
+          />
+          <input
+            type="time"
+            name="startTime"
+            className="form-input"
+            value={formInputs.startTime}
+            onChange={onChange}
+          />
+        </label>
+        <label>
+          End Date and Time:
+          <input
+            type="date"
+            name="endDate"
+            className="form-input"
+            onChange={onChange}
+            value={formInputs.endDate}
+          />
+          <input
+            type="time"
+            name="endTime"
+            className="form-input"
+            value={formInputs.endTime}
+            onChange={onChange}
+          />
+        </label>
 
-              <br />
-              <label>
-                End Date and Time:
-                <input
-                  type="date"
-                  name="endDate"
-                  onChange={onChange}
-                  value={formInputs.endDate}
-                />
-                <input
-                  type="time"
-                  name="endTime"
-                  value={formInputs.endTime}
-                  onChange={onChange}
-                />
-              </label>
-              <br />
-              <label>
-                How good was your sleep?
-                <select onChange={onChange} name="rating">
-                  <option id="4">4 😀</option>
-                  <option id="3">3 🙂</option>
-                  <option id="2">2 😑</option>
-                  <option id="1">1 😭</option>
-                </select>
-              </label>
-              <br />
-              <input
-                type="textarea"
-                name="notes"
-                value={formInputs.notes}
-                onChange={onChange}
-                placeholder="notes"
-              />
-              <br />
+        <label>
+          Did you sleep well?
+          <select onChange={onChange} name="rating">
+            <option id="4">4 😀</option>
+            <option id="3">3 🙂</option>
+            <option id="2">2 😑</option>
+            <option id="1">1 😭</option>
+          </select>
+        </label>
 
-              <input type="submit" value="submit" className="button" />
-            </Form>
-          {/* </Box> */}
-        {/* </Box> */}
-      {/* </Grommet> */}
+        <input
+          type="textarea"
+          name="notes"
+          value={formInputs.notes}
+          onChange={onChange}
+          placeholder="notes"
+        />
+
+        <button className="form-submit">Submit</button>
+      </form>
     </div>
   );
 };
