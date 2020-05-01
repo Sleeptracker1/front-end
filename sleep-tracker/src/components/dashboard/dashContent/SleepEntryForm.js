@@ -47,7 +47,14 @@ const SleepEntryForm = ({
     e.preventDefault();
     const { start, end } = evalutateTime();
     const formatRating = formInputs.rating.split(" ");
-    console.log(formatRating);
+
+    //testing material ui
+    // const testStart = moment('2020-04-29T07:00:00.000Z');
+    // const testEnd = moment("2020-04-29T13:00:00.000Z");
+    // const diff = moment("2020-04-29T13:00:00.000Z").diff(moment('2020-04-29T07:00:00.000Z'));
+    // const diffDur = moment.duration(diff);
+    // console.log(diffDur.hours());
+    
     const postValues = {
       start_time: start._i,
       end_time: end._i,
@@ -67,9 +74,9 @@ const SleepEntryForm = ({
       });
     } else {
       console.log(postValues);
-      createLog(postValues, () => {
-        push("/user-dashboard");
-      });
+      // createLog(postValues, () => {
+      //   push("/user-dashboard");
+      // });
     }
   };
   const onChange = (e) => {
