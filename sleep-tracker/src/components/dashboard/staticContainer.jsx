@@ -1,15 +1,29 @@
 import React from "react";
-import {Link } from "react-router-dom";
+import { connect } from "react-redux";
+import Avatar from "../../assets/images/default-avatar.svg";
+import Links from "./dashSidebar/Links";
+import { Link } from "react-router-dom";
 
 import SleepEntryForm from "./dashContent/SleepEntryForm";
-const StaticContainer = () => {
+const StaticContainer = ({ welcome }) => {
+  const split = welcome.split(" ");
   return (
     <div className="static-container">
       <div className="static-side-bar">
-        asdasd
+        <div className="profile-container">
+          <div className="img-container">
+            <img src={Avatar} alt="user avatar" />
+          </div>
+          <h1>{split[1]}</h1>
+          <Links />
+        </div>
       </div>
       <SleepEntryForm />
     </div>
-  )
-}
-export default StaticContainer
+  );
+};
+
+const mapState = (state) => ({
+  welcome: state.auth.currentUser.message,
+});
+export default connect(mapState, null)(StaticContainer);

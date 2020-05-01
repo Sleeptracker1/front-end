@@ -201,8 +201,8 @@ const actions = {
   completeEditLog,
 };
 const mapState = (state) => ({
-  // userId: state.auth.currentUser.users_id,
-  // editing: state.sleepLog.editing,
-  // logToEdit: state.sleepLog.logToEdit,
+  userId: state.auth.currentUser.users_id,
+  editing: state.sleepLog.editing,
+  logToEdit: state.sleepLog.logToEdit,
 });
 export default connect(mapState, actions)(SleepEntryForm);
