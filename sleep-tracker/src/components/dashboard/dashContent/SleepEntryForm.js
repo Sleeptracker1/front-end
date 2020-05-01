@@ -49,10 +49,7 @@ const SleepEntryForm = ({
     e.preventDefault();
     const { start, end } = evalutateTime();
     const formatRating = formInputs.rating.split(" ");
-<<<<<<< HEAD
-=======
     console.log(formatRating);
->>>>>>> 5c2efd6a74c7c74ed36f184d74773f503b7dc365
     const postValues = {
       start_time: start._i,
       end_time: end._i,
@@ -101,63 +98,63 @@ const SleepEntryForm = ({
             width="large"
             align="center"
           > */}
-            <Form className="smart-green" onSubmit={AddDateTime}>
-              <label>
-                Start Date and Time:
-                <input
-                  type="date"
-                  name="startDate"
-                  onChange={onChange}
-                  value={formInputs.startDate}
-                />
-                <input
-                  type="time"
-                  name="startTime"
-                  value={formInputs.startTime}
-                  onChange={onChange}
-                />
-              </label>
+      <Form className="smart-green" onSubmit={AddDateTime}>
+        <label>
+          Start Date and Time:
+          <input
+            type="date"
+            name="startDate"
+            onChange={onChange}
+            value={formInputs.startDate}
+          />
+          <input
+            type="time"
+            name="startTime"
+            value={formInputs.startTime}
+            onChange={onChange}
+          />
+        </label>
 
-              <br />
-              <label>
-                End Date and Time:
-                <input
-                  type="date"
-                  name="endDate"
-                  onChange={onChange}
-                  value={formInputs.endDate}
-                />
-                <input
-                  type="time"
-                  name="endTime"
-                  value={formInputs.endTime}
-                  onChange={onChange}
-                />
-              </label>
-              <br />
-              <label>
-                How good was your sleep?
-                <select onChange={onChange} name="rating">
-                  <option id="4">4 😀</option>
-                  <option id="3">3 🙂</option>
-                  <option id="2">2 😑</option>
-                  <option id="1">1 😭</option>
-                </select>
-              </label>
-              <br />
-              <input
-                type="textarea"
-                name="notes"
-                value={formInputs.notes}
-                onChange={onChange}
-                placeholder="notes"
-              />
-              <br />
+        <br />
+        <label>
+          End Date and Time:
+          <input
+            type="date"
+            name="endDate"
+            onChange={onChange}
+            value={formInputs.endDate}
+          />
+          <input
+            type="time"
+            name="endTime"
+            value={formInputs.endTime}
+            onChange={onChange}
+          />
+        </label>
+        <br />
+        <label>
+          How good was your sleep?
+          <select onChange={onChange} name="rating">
+            <option id="4">4 😀</option>
+            <option id="3">3 🙂</option>
+            <option id="2">2 😑</option>
+            <option id="1">1 😭</option>
+          </select>
+        </label>
+        <br />
+        <input
+          type="textarea"
+          name="notes"
+          value={formInputs.notes}
+          onChange={onChange}
+          placeholder="notes"
+        />
+        <br />
 
-              <input type="submit" value="submit" className="button" />
-            </Form>
-          {/* </Box> */}
-        {/* </Box> */}
+        <input type="submit" value="submit" className="button" />
+      </Form>
+      {/* </Box> */}
+      {/* </Box> */}
       {/* </Grommet> */}
     </div>
   );
