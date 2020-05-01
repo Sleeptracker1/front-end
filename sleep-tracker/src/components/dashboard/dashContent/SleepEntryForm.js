@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import moment from "moment";
+import Sleeper from "../../../assets/images/sleeping.svg";
 import {
   createLog,
   completeEditLog,
@@ -102,6 +103,9 @@ const SleepEntryForm = ({
   return (
     <div className="form-container">
       <form className="form-wrapper" onSubmit={AddDateTime}>
+        <div className="img-container">
+          <img src={Sleeper} alt="sleeping svg" />
+        </div>
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <div className="material-wrapper">
             {/* start */}
@@ -166,7 +170,7 @@ const SleepEntryForm = ({
 
             <div className="default-inputs">
               <label>
-                Did you sleep well?
+                <p>Did you sleep well?</p>
                 <select onChange={onChange} name="rating">
                   <option id="4">4 😀</option>
                   <option id="3">3 🙂</option>
@@ -175,10 +179,10 @@ const SleepEntryForm = ({
                 </select>
               </label>
               <textarea
+                className="form-input"
                 type="text"
                 name="notes"
                 rows="3"
-                // cols="50"
                 value={formInputs.notes}
                 onChange={onChange}
                 placeholder="notes"

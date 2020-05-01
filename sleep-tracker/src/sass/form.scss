@@ -1,43 +1,30 @@
-.form-submit {
-  margin-left: 0.5rem;
-  min-width: 2rem;
-  border: 0.1rem solid #fdfffc;
-  width: 50%;
-  border-radius: 0.5rem;
-  text-align: center;
-  cursor: pointer;
-  color: #fcfcfc;
-  background: #ccc;
-  padding: 0.5em;
-  height: 2.25rem;
-  vertical-align: middle;
-  line-height: 1rem;
-  transition: all 0.3s;
-  &:focus {
-    outline: none;
-  }
-  &:hover {
-    background-color: rgba(253, 68, 133, 0.73);
-  }
-}
 //form styles
 .form-wrapper {
-  border: 1px black solid;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 50%;
-  margin: 7% auto;
+  margin: -1% auto;
   margin-left: 30%;
   padding: 3% 0;
+
+  .img-container {
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 5%;
+    img {
+      width: 50%;
+    }
+  }
   //input
   .form-input,
   input[type="text"] {
     width: 100%;
     height: 2.5rem;
     text-align: center;
-    background-color: rgba(254, 230, 237, 1);
+    background-color: rgba(108, 99, 255, 0.31);
     letter-spacing: 0.1rem;
     border: 0.1em solid #fdfffc;
     vertical-align: bottom;
@@ -47,9 +34,11 @@
     border-radius: 0.5rem;
     transition: all 0.5s;
     margin-top: 5%;
+    box-shadow: $box-shadow;
     &:focus {
       outline: none;
-      box-shadow: 0 0 10px #f50057;
+      box-shadow: $box-shadow-inset;
+      transform: scale(0.99);
     }
     &::placeholder {
       color: #3f3d55;
@@ -64,7 +53,8 @@
   justify-content: center;
   margin-bottom: 5%;
   width: 61%;
-  border: 1px black solid;
+  box-shadow: $box-shadow;
+  border-radius: 1rem;
   .time-table {
     display: flex;
     width: 100%;
@@ -85,4 +75,40 @@
   width: 100%;
   margin-top: 5%;
   justify-content: space-between;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    p {
+      margin: 1% 0;
+    }
+  }
+  textarea {
+    resize: none;
+    margin-top: 3%;
+  }
+  button {
+    width: 100%;
+    margin-top: 2%;
+
+    min-width: 2rem;
+    border: 0.1rem solid #fdfffc;
+    border-radius: 0.5rem;
+    text-align: center;
+    cursor: pointer;
+    color: #fcfcfc;
+    background: #ccc;
+    padding: 0.5em;
+    height: 2.25rem;
+    vertical-align: middle;
+    line-height: 1rem;
+    transition: all 0.3s;
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      background-color: rgba(108, 99, 255, 1);
+    }
+  }
 }

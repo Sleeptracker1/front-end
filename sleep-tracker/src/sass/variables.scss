@@ -6,3 +6,15 @@ $gradient-color: linear-gradient(
   rgba(83, 109, 254, 0.13) 0%,
   rgba(0, 176, 255, 0.17) 100%
 );
+
+
+$box-shadow: -6px -6px 20px rgba(255, 255, 255, 1),
+  6px 6px 20px rgba(0, 0, 0, 0.1);
+
+$box-shadow-inset: inset -6px -6px 20px rgba(255, 255, 255, 0.5),
+  inset 6px 6px 20px rgba(0, 0, 0, 0.05);
+
+$box-shadow-btn: -4px -4px 15px rgba(255, 255, 255, 1),
+  4px 4px 15px rgba(0, 0, 0, 0.1);
+$box-shadow-btn-inset: inset -4px -4px 10px rgba(255, 255, 255, 0.5),
+  inset 4px 4px 10px rgba(0, 0, 0, 0.1);
