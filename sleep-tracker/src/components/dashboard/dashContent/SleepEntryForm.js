@@ -7,6 +7,12 @@ import {
   completeEditLog,
 } from "../../../redux/actions/sleepLogActions";
 
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
 const SleepEntryForm = ({
   createLog,
   userId,
@@ -16,13 +22,24 @@ const SleepEntryForm = ({
 }) => {
   const { push } = useHistory();
   const [formInputs, setFormInputs] = useState({
-    startDate: "",
-    startTime: "",
-    endDate: "",
-    endTime: "",
+    // startDate: "",
+    // startTime: "",
+    // endDate: "",
+    // endTime: "",
     rating: "4",
     notes: "",
   });
+
+  // material ui
+  const [selectStart, setSelectStart] = useState(new Date());
+  const [selectEnd, setSelectEnd] = useState(new Date());
+
+  const handleStart = (date) => {
+    setSelectStart(date);
+  };
+  const handleEnd = (date) => {
+    setSelectEnd(date);
+  };
 
   useEffect(() => {
     if (editing) {
@@ -49,15 +66,16 @@ const SleepEntryForm = ({
     const formatRating = formInputs.rating.split(" ");
 
     //testing material ui
-    // const testStart = moment('2020-04-29T07:00:00.000Z');
-    // const testEnd = moment("2020-04-29T13:00:00.000Z");
-    // const diff = moment("2020-04-29T13:00:00.000Z").diff(moment('2020-04-29T07:00:00.000Z'));
-    // const diffDur = moment.duration(diff);
-    // console.log(diffDur.hours());
-    
+
+    console.log(moment(selectStart).format());
+    const diff = moment(selectEnd).diff(moment(selectStart));
+
+    const diffDur = moment.duration(diff);
+    console.log(diffDur.hours());
+
     const postValues = {
-      start_time: start._i,
-      end_time: end._i,
+      start_time: selectStart,
+      end_time: selectEnd,
       score: formatRating[0],
       users_id: userId,
       notes: formInputs.notes,
@@ -74,9 +92,9 @@ const SleepEntryForm = ({
       });
     } else {
       console.log(postValues);
-      // createLog(postValues, () => {
-      //   push("/user-dashboard");
-      // });
+      createLog(postValues, () => {
+        push("/user-dashboard");
+      });
     }
   };
   const onChange = (e) => {
@@ -90,7 +108,7 @@ const SleepEntryForm = ({
   return (
     <div className="form-container">
       <form className="form-wrapper" onSubmit={AddDateTime}>
-        <label>
+        {/* <label>
           Start Date and Time:
           <input
             type="date"
@@ -123,7 +141,59 @@ const SleepEntryForm = ({
             value={formInputs.endTime}
             onChange={onChange}
           />
-        </label>
+        </label> */}
+
+        {/* testing material ui */}
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+          <div>
+            {/* start */}
+            <KeyboardDatePicker
+              disableToolbar
+              variant="inline"
+              format="YYYY/MM/DD"
+              margin="normal"
+              id="date-picker-inline"
+              label="Date picker inline"
+              value={selectStart}
+              onChange={handleStart}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+            />
+            <KeyboardTimePicker
+              margin="normal"
+              id="time-picker"
+              label="Time picker"
+              value={selectStart}
+              onChange={handleStart}
+              KeyboardButtonProps={{
+                "aria-label": "change time",
+              }}
+            />
+            {/* end */}
+            <KeyboardDatePicker
+              margin="normal"
+              id="date-picker-dialog"
+              label="Date picker dialog"
+              format="YYYY/MM/DD"
+              value={selectEnd}
+              onChange={handleEnd}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+            />
+            <KeyboardTimePicker
+              margin="normal"
+              id="time-picker"
+              label="Time picker"
+              value={selectEnd}
+              onChange={handleEnd}
+              KeyboardButtonProps={{
+                "aria-label": "change time",
+              }}
+            />
+          </div>
+        </MuiPickersUtilsProvider>
 
         <label>
           Did you sleep well?
@@ -153,8 +223,8 @@ const actions = {
   completeEditLog,
 };
 const mapState = (state) => ({
-  // userId: state.auth.currentUser.users_id,
-  // editing: state.sleepLog.editing,
-  // logToEdit: state.sleepLog.logToEdit,
+  userId: state.auth.currentUser.users_id,
+  editing: state.sleepLog.editing,
+  logToEdit: state.sleepLog.logToEdit,
 });
 export default connect(mapState, actions)(SleepEntryForm);
