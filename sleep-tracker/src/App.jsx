@@ -3,10 +3,9 @@ import { Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { DashStyles } from "./styled-component/dashboardContainer";
-import { lightTheme, darkTheme } from "./styled-component/theme";
+import { lightTheme } from "./styled-component/theme";
 import DashContainer from "./components/dashboard/dashContainer";
-import SleepDisplay from "./components/dashboard/dashContent/SleepDisplay";
-import SleepEntryForm from "./components/dashboard/dashContent/SleepEntryForm";
+
 import PrivateRoute from "./utils/PrivateRoute";
 import LoginForm from "./components/Forms/LoginForm";
 import RegistrationForm from "./components/Forms/RegistrationForm";

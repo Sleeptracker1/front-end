@@ -7,7 +7,7 @@ export const Container = styled.div`
   width: 100%;
   cursor: pointer;
   transition: 0.2s all ease-in-out;
-  margin: 35% 0;
+  margin-top: 25%;
 `;
 
 export const StyledLink = styled(Link)`
