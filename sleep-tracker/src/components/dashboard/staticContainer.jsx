@@ -6,7 +6,7 @@ const StaticContainer = () => {
   return (
     <div className="static-container">
       <div className="static-side-bar">
-        side bar says hello
+        asdasd
       </div>
       <SleepEntryForm />
     </div>

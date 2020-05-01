@@ -21,7 +21,6 @@ function App({ loggedIn }) {
         <Route exact path="/register" component={RegistrationForm} />
         <Switch>
           <PrivateRoute exact path="/user-dashboard" component={DashContainer} />
-          <PrivateRoute exact path="/sleep-routine" component={SleepDisplay} />
           <Route exact path="/add-sleep-routine" component={StaticContainer} />
         </Switch>
       </ThemeProvider>
